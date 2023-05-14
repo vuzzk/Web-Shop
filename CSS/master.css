@@ -1,0 +1,45 @@
+﻿body {
+}
+
+.header{
+    width: 100%;
+}
+
+    .top{
+        width: 100%;
+        height: 50px;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        align-items: center;
+    }
+        .logo {
+            width: fit-content;
+            float: left;
+            margin-left: 5%;
+            margin-right: 5%;
+        }
+        .searchbar {
+            width: 50%;
+            background: yellow;
+            float: right;
+        }
+        .cart {
+            width: 15%;
+            float: right;
+            background: green
+        }
+        .my_account {
+            width: 15%;
+            float: right;
+            background: blue;
+        }
+
+    .baner{
+        height: 500px;
+        background:deeppink
+    }
+
+    .navbar {
+        background-image: radial-gradient(circle, #553c9a, #ee4b2b);
+    }

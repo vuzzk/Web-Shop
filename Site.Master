@@ -1,0 +1,80 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="Web_Shop.Site" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="Content/bootstrap.min.css" rel="stylesheet">
+
+    <title>Prodavnica</title>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand" href="#">
+                <img src="Resources/logoWhite.png" />
+            </a>
+            <div class="collapse navbar-collapse" id="navbarNav">
+              <ul class="navbar-nav ml-auto">
+                <li class="nav-item active">
+                  <a class="nav-link" href="#">Početna</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">Prodavnica</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">O nama</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">Kontakt</a>
+                </li>
+              </ul>
+            </div>
+            <div class="navbar-nav ml-auto">
+              <a class="nav-link" href="#">
+                <button type="button" class="btn btn-outline-light">Korpa</button>
+              </a>
+              <a class="nav-link" href="#">
+                <button type="button" class="btn btn-outline-light">Moj Nalog</button>
+              </a>
+            </div>
+        </nav>
+
+      <!-- Call to Action Image -->
+        <div class="jumbotron jumbotron-fluid position-relative" style="background-image: url('Resources/baner3.png'); height: calc(100vh - 56px); background-size: cover;">
+          <div class="mask"></div>
+          <div class="container text-center">
+            <h1 class="text-white font-weight-bold" style="text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);">Kod nas možete pronaći BAŠ sve!</h1>
+            <a class="btn btn-outline-light btn-lg btn-thick" href="#" role="button">UVERITE SE I SAMI</a>
+          </div>
+        </div>
+
+        <style>
+          .container {
+              position: absolute;
+              top: 50%;
+              left: 50%;
+              transform: translate(-50%, -50%);
+          }
+          .btn-thick{
+              border-width: 3px;
+              padding: 12px 24px;
+          }
+        </style>
+
+        <div>
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+            </asp:ContentPlaceHolder>
+        </div>
+    </form>
+
+    <script src="Scripts/jquery-3.6.4.min.js"></script>
+    <script src="Scripts/umd/popper.min.js"></script>
+    <script src="Scripts/bootstrap.min.js"></script>
+</body>
+</html>
