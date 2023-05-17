@@ -26,14 +26,14 @@ namespace Web_Shop
             comm.CommandText = "dbo.Korisnik_Insert";
             // kolekcija Parameters
             comm.Parameters.Add(new SqlParameter("@ime", SqlDbType.NVarChar, 100, ParameterDirection.Input, false, 0, 0, "", DataRowVersion.Current, ime));
-            comm.Parameters.Add(new SqlParameter("@prezime", SqlDbType.NVarChar, 5, ParameterDirection.Input, false, 0, 0, "", DataRowVersion.Current, prezime));
-            comm.Parameters.Add(new SqlParameter("@username", SqlDbType.NVarChar, 5, ParameterDirection.Input, false, 0, 0, "", DataRowVersion.Current, username));
-            comm.Parameters.Add(new SqlParameter("@lozinka", SqlDbType.NVarChar, 5, ParameterDirection.Input, false, 0, 0, "", DataRowVersion.Current, lozinka));
-            comm.Parameters.Add(new SqlParameter("@email", SqlDbType.NVarChar, 5, ParameterDirection.Input, false, 0, 0, "", DataRowVersion.Current, email));
-            comm.Parameters.Add(new SqlParameter("@drzava", SqlDbType.NVarChar, 5, ParameterDirection.Input, false, 0, 0, "", DataRowVersion.Current, drzava));
-            comm.Parameters.Add(new SqlParameter("@grad", SqlDbType.NVarChar, 5, ParameterDirection.Input, false, 0, 0, "", DataRowVersion.Current, grad));
+            comm.Parameters.Add(new SqlParameter("@prezime", SqlDbType.NVarChar, 100, ParameterDirection.Input, false, 0, 0, "", DataRowVersion.Current, prezime));
+            comm.Parameters.Add(new SqlParameter("@username", SqlDbType.NVarChar, 30, ParameterDirection.Input, false, 0, 0, "", DataRowVersion.Current, username));
+            comm.Parameters.Add(new SqlParameter("@lozinka", SqlDbType.NVarChar, 255, ParameterDirection.Input, false, 0, 0, "", DataRowVersion.Current, lozinka));
+            comm.Parameters.Add(new SqlParameter("@email", SqlDbType.NVarChar, 255, ParameterDirection.Input, false, 0, 0, "", DataRowVersion.Current, email));
+            comm.Parameters.Add(new SqlParameter("@drzava", SqlDbType.NVarChar, 100, ParameterDirection.Input, false, 0, 0, "", DataRowVersion.Current, drzava));
+            comm.Parameters.Add(new SqlParameter("@grad", SqlDbType.NVarChar, 100, ParameterDirection.Input, false, 0, 0, "", DataRowVersion.Current, grad));
             comm.Parameters.Add(new SqlParameter("@postanski_br", SqlDbType.Int, 5, ParameterDirection.Input, false, 0, 0, "", DataRowVersion.Current, postanski_br));
-            comm.Parameters.Add(new SqlParameter("@adresa", SqlDbType.NVarChar, 5, ParameterDirection.Input, false, 0, 0, "", DataRowVersion.Current, adresa));
+            comm.Parameters.Add(new SqlParameter("@adresa", SqlDbType.NVarChar, 255, ParameterDirection.Input, false, 0, 0, "", DataRowVersion.Current, adresa));
             comm.Parameters.Add(new SqlParameter("@uloga_korisnika_id", SqlDbType.Int, 5, ParameterDirection.Input, false, 0, 0, "", DataRowVersion.Current, uloga_korisnika_id));
             comm.Parameters.Add(new SqlParameter("@RETURN_VALUE", SqlDbType.Int, 4, ParameterDirection.ReturnValue, true, 0, 0, "", DataRowVersion.Current, null));
             conn.Open();
@@ -51,7 +51,7 @@ namespace Web_Shop
             }
             return rezultat;
         }
-        public int Brisanje_Korisnika(int korisnik)
+        public int Brisanje_Korisnika(string email)
         {
 
             conn.ConnectionString = wqbConfig;
@@ -61,7 +61,7 @@ namespace Web_Shop
             comm.CommandType = CommandType.StoredProcedure;
             comm.CommandText = "dbo.Korisnik_Delete";
             // kolekcija Parameters
-            comm.Parameters.Add(new SqlParameter("@korisnik", SqlDbType.Int, 100, ParameterDirection.Input, false, 0, 0, "", DataRowVersion.Current, korisnik));
+            comm.Parameters.Add(new SqlParameter("@email", SqlDbType.NVarChar, 50, ParameterDirection.Input, false, 0, 0, "", DataRowVersion.Current, email));
             comm.Parameters.Add(new SqlParameter("@RETURN_VALUE", SqlDbType.Int, 4, ParameterDirection.ReturnValue, true, 0, 0, "", DataRowVersion.Current, null));
             conn.Open();
             comm.ExecuteNonQuery();
@@ -80,7 +80,7 @@ namespace Web_Shop
             return rezultat;
         }
 
-        public int Izmena_Korisnika(int korisnik_id, string ime, string prezime, string username, string lozinka, string email, string drzava, string grad, int postanski_br, string adresa, int uloga_korisnika_id)
+        public int Izmena_Korisnika(string ime, string prezime, string email, string drzava, string grad, int postanski_br, string adresa, int uloga_korisnika_id)
         {
 
             conn.ConnectionString = wqbConfig;
@@ -88,19 +88,16 @@ namespace Web_Shop
 
             comm.Connection = conn;
             comm.CommandType = CommandType.StoredProcedure;
-            comm.CommandText = "S_Godina_Update";
+            comm.CommandText = "dbo.Korisnik_Update";
             // kolekcija Parameters
-            comm.Parameters.Add(new SqlParameter("@korisnik_id", SqlDbType.NVarChar, 100, ParameterDirection.Input, false, 0, 0, "", DataRowVersion.Current, korisnik_id)); 
             comm.Parameters.Add(new SqlParameter("@ime", SqlDbType.NVarChar, 100, ParameterDirection.Input, false, 0, 0, "", DataRowVersion.Current, ime));
-            comm.Parameters.Add(new SqlParameter("@prezime", SqlDbType.NVarChar, 5, ParameterDirection.Input, false, 0, 0, "", DataRowVersion.Current, prezime));
-            comm.Parameters.Add(new SqlParameter("@username", SqlDbType.NVarChar, 5, ParameterDirection.Input, false, 0, 0, "", DataRowVersion.Current, username));
-            comm.Parameters.Add(new SqlParameter("@lozinka", SqlDbType.NVarChar, 5, ParameterDirection.Input, false, 0, 0, "", DataRowVersion.Current, lozinka));
-            comm.Parameters.Add(new SqlParameter("@email", SqlDbType.NVarChar, 5, ParameterDirection.Input, false, 0, 0, "", DataRowVersion.Current, email));
-            comm.Parameters.Add(new SqlParameter("@drzava", SqlDbType.NVarChar, 5, ParameterDirection.Input, false, 0, 0, "", DataRowVersion.Current, drzava));
-            comm.Parameters.Add(new SqlParameter("@grad", SqlDbType.NVarChar, 5, ParameterDirection.Input, false, 0, 0, "", DataRowVersion.Current, grad));
+            comm.Parameters.Add(new SqlParameter("@prezime", SqlDbType.NVarChar, 100, ParameterDirection.Input, false, 0, 0, "", DataRowVersion.Current, prezime));
+            comm.Parameters.Add(new SqlParameter("@email", SqlDbType.NVarChar, 50, ParameterDirection.Input, false, 0, 0, "", DataRowVersion.Current, email));
+            comm.Parameters.Add(new SqlParameter("@drzava", SqlDbType.NVarChar, 100, ParameterDirection.Input, false, 0, 0, "", DataRowVersion.Current, drzava));
+            comm.Parameters.Add(new SqlParameter("@grad", SqlDbType.NVarChar, 100, ParameterDirection.Input, false, 0, 0, "", DataRowVersion.Current, grad));
             comm.Parameters.Add(new SqlParameter("@postanski_br", SqlDbType.Int, 5, ParameterDirection.Input, false, 0, 0, "", DataRowVersion.Current, postanski_br));
-            comm.Parameters.Add(new SqlParameter("@adresa", SqlDbType.NVarChar, 5, ParameterDirection.Input, false, 0, 0, "", DataRowVersion.Current, adresa));
-            comm.Parameters.Add(new SqlParameter("@uloga_korisnika_id", SqlDbType.Int, 5, ParameterDirection.Input, false, 0, 0, "", DataRowVersion.Current, uloga_korisnika_id));
+            comm.Parameters.Add(new SqlParameter("@adresa", SqlDbType.NVarChar, 255, ParameterDirection.Input, false, 0, 0, "", DataRowVersion.Current, adresa));
+            comm.Parameters.Add(new SqlParameter("@uloga_korisnika_id", SqlDbType.Int, 4, ParameterDirection.Input, false, 0, 0, "", DataRowVersion.Current, uloga_korisnika_id));
             comm.Parameters.Add(new SqlParameter("@RETURN_VALUE", SqlDbType.Int, 4, ParameterDirection.ReturnValue, true, 0, 0, "", DataRowVersion.Current, null));
             conn.Open();
             comm.ExecuteNonQuery();
@@ -217,7 +214,7 @@ namespace Web_Shop
             int rezultat;
             comm.Connection = conn;
             comm.CommandType = CommandType.StoredProcedure;
-            comm.CommandText = "dbo.Proizvodi_Insert_1";
+            comm.CommandText = "dbo.Proizvodi_Insert";
             // kolekcija Parameters
             comm.Parameters.Add(new SqlParameter("@ime", SqlDbType.NVarChar, 100, ParameterDirection.Input, false, 0, 0, "", DataRowVersion.Current, ime));
             comm.Parameters.Add(new SqlParameter("@sifra", SqlDbType.NVarChar, 500, ParameterDirection.Input, false, 0, 0, "", DataRowVersion.Current, sifra));
@@ -274,6 +271,48 @@ namespace Web_Shop
                 rezultat = 1;
             }
             return rezultat;
+        }
+
+        public DataSet Korisnik(string email)
+        {
+            conn.ConnectionString = wqbConfig;
+
+            comm.Connection = conn;
+            comm.CommandType = CommandType.StoredProcedure;
+            comm.CommandText = "Korisnik_Nalog '" + email + "'";
+            conn.Open();
+            comm.ExecuteNonQuery();
+            conn.Close();
+            da.SelectCommand = comm;
+            da.Fill(ds);
+
+            if (conn.State == ConnectionState.Open)
+            {
+                conn.Close();
+            }
+
+            return (ds);
+        }
+
+        public DataSet Svi_Korisnici()
+        {
+            conn.ConnectionString = wqbConfig;
+
+            comm.Connection = conn;
+            comm.CommandType = CommandType.StoredProcedure;
+            comm.CommandText = "Korisnici_Select";
+            conn.Open();
+            comm.ExecuteNonQuery();
+            conn.Close();
+            da.SelectCommand = comm;
+            da.Fill(ds);
+
+            if (conn.State == ConnectionState.Open)
+            {
+                conn.Close();
+            }
+
+            return (ds);
         }
 
 

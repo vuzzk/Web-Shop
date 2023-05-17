@@ -19,11 +19,18 @@ namespace Web_Shop
             WebShop _login = new WebShop();
             int rezultat;
 
-            rezultat = _login.Provera_Admina(txtEmail.Text, txtPassword.Text);
+
+            string email = txtEmail.Text;
+            string password = txtPassword.Text;
+
+            rezultat = _login.Provera_Admina(email, password);
 
             if (rezultat == 0)
             {
-                Response.Redirect("admin.aspx");
+                Session["LoggedIn"] = true;
+                Session["mail"] = email;
+
+                Response.Redirect("home.aspx");
             }
             else
             {

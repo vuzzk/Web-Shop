@@ -17,20 +17,20 @@
         <div class="container d-flex justify-content-center align-items-center vh-100" runat="server" id="part1" Visible="true">
             <div class="card">
                 <div class="card-body px-4 py-3">
-                    <h5 class="card-title text-center mb-3">Part One</h5>
+                    <h5 class="card-title text-center mb-3">Podaci o nalogu</h5>
                     <div class="form-group">
-                        <asp:Label ID="lblUsername" runat="server" Text="Username"></asp:Label>
+                        <asp:Label ID="lblUsername" runat="server" Text="Korisničko ime"></asp:Label>
                         <asp:TextBox ID="txtUsername" runat="server" CssClass="form-control" placeholder="Enter username" />
                     </div>
                     <div class="form-group">
-                        <asp:Label ID="lblEmail" runat="server" Text="Email"></asp:Label>
+                        <asp:Label ID="lblEmail" runat="server" Text="Mejl adresa"></asp:Label>
                         <asp:TextBox ID="txtEmail" runat="server" CssClass="form-control" placeholder="Enter email" Type="email" />
                     </div>
                     <div class="form-group">
-                        <asp:Label ID="lblPassword" runat="server" Text="Password"></asp:Label>
+                        <asp:Label ID="lblPassword" runat="server" Text="Lozinka"></asp:Label>
                         <asp:TextBox ID="txtPassword" runat="server" CssClass="form-control" TextMode="Password" placeholder="Enter password" />
                     </div>
-                    <asp:Button ID="btnNext" runat="server" Text="Next" CssClass="btn btn-primary d-block mx-auto mt-4" OnClick="btnNext_Click" />
+                    <asp:Button ID="btnNext" runat="server" Text="Sledeće" CssClass="btn btn-primary d-block mx-auto mt-4" OnClick="btnNext_Click" />
                 </div>
             </div>
         </div>
@@ -38,33 +38,37 @@
         <div class="container d-flex justify-content-center align-items-center vh-100"  runat="server" id="part2" Visible="false">
             <div class="card">
                 <div class="card-body px-4 py-3">
-                    <h5 class="card-title text-center mb-3">Part Two</h5>
+                    <h5 class="card-title text-center mb-3">Podaci o korisniku</h5>
                     <div class="form-group">
-                        <asp:Label ID="lblName" runat="server" Text="Name"></asp:Label>
+                        <asp:Label ID="lblName" runat="server" Text="Ime"></asp:Label>
                         <asp:TextBox ID="txtName" runat="server" CssClass="form-control" placeholder="Enter name" />
                     </div>
                     <div class="form-group">
-                        <asp:Label ID="lblSurname" runat="server" Text="Surname"></asp:Label>
+                        <asp:Label ID="lblSurname" runat="server" Text="Prezime"></asp:Label>
                         <asp:TextBox ID="txtSurname" runat="server" CssClass="form-control" placeholder="Enter surname" />
                     </div>
                     <div class="form-group">
-                        <asp:Label ID="lblCountry" runat="server" Text="Country"></asp:Label>
+                        <asp:Label ID="lblCountry" runat="server" Text="Država"></asp:Label>
                         <asp:TextBox ID="txtCountry" runat="server" CssClass="form-control" placeholder="Enter country" />
                     </div>
                     <div class="form-group">
-                        <asp:Label ID="lblCity" runat="server" Text="Country"></asp:Label>
+                        <asp:Label ID="lblCity" runat="server" Text="Grad"></asp:Label>
                         <asp:TextBox ID="txtCity" runat="server" CssClass="form-control" placeholder="Enter city" />
                     </div>
                     <div class="form-group">
-                        <asp:Label ID="lblPostCode" runat="server" Text="Country"></asp:Label>
+                        <asp:Label ID="lblPostCode" runat="server" Text="Poštanski broj"></asp:Label>
                         <asp:TextBox ID="txtPostCode" runat="server" CssClass="form-control" placeholder="Enter post code" />
                     </div>
                     <div class="form-group">
-                        <asp:Label ID="lblAdress" runat="server" Text="Country"></asp:Label>
+                        <asp:Label ID="lblAdress" runat="server" Text="Adresa"></asp:Label>
                         <asp:TextBox ID="txtAdress" runat="server" CssClass="form-control" placeholder="Enter adress" />
                     </div>
-                    <asp:Button ID="btnBack" runat="server" Text="Back" CssClass="btn btn-primary d-block mx-auto mt-4" OnClick="btnNext_Click" />
-                    <asp:Button ID="btnSignUp" runat="server" Text="Sign Up" CssClass="btn btn-primary d-block mx-auto mt-4" OnClick="btnRegister_Click" />
+                    <div class="alert alert-danger" id="failureMessage" runat="server" visible="false">
+                        Neuspešno! Korisnik nije dodat!            
+                        <asp:Button ID="btnCloseError" runat="server" type="button" data-dismiss="alert" aria-label="Close" Text="" CssClass="btn-close" OnClick="btnClose_Click" />
+                    </div>
+                    <asp:Button ID="btnBack" runat="server" Text="Nazad" CssClass="btn btn-primary d-block mx-auto mt-4" OnClick="btnNext_Click" />
+                    <asp:Button ID="btnSignUp" runat="server" Text="Registrujte se" CssClass="btn btn-primary d-block mx-auto mt-4" OnClick="btnRegister_Click" />
                 </div>
             </div>
         </div>

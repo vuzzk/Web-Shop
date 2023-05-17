@@ -11,8 +11,6 @@ proizvodjac nvarchar(100) not null,
 kategorija_id int,
 )
 
-Drop table Proizvodi
-
 Create table Opis1(
 opis_id int primary key identity(1,1),
 sifra_proiz int,
@@ -164,12 +162,9 @@ GO
 /**/
 GO
 Create PROC Korisnik_Update
-@korisnik_id int,
 @ime nvarchar(100),
 @prezime nvarchar(100),
-@username nvarchar(30),
-@lozinka nvarchar(255),
-@email nvarchar(255),
+@email nvarchar(50),
 @drzava nvarchar(100),
 @grad nvarchar(100),
 @postanski_br int,
@@ -180,11 +175,11 @@ SET LOCK_TIMEOUT 3000;
 
 BEGIN TRY
 	IF EXISTS (SELECT TOP 1 ime FROM Korisnici
-	WHERE korisnik_id = @korisnik_id)
+	WHERE email = @email)
 
 	BEGIN
 	
-	Update Korisnici Set ime=@ime, prezime=@prezime, username=@username, lozinka=@lozinka, email=@email, drzava=@drzava, grad=@grad, postanski_br=@postanski_br, adresa=@adresa, uloga_korisnika_id=@uloga_korisnika_id where korisnik_id = @korisnik_id
+	Update Korisnici Set ime=@ime, prezime=@prezime, drzava=@drzava, grad=@grad, postanski_br=@postanski_br, adresa=@adresa, uloga_korisnika_id=@uloga_korisnika_id where email = @email
 		RETURN 0;
 	END
 	RETURN -1;
@@ -196,10 +191,10 @@ GO
 /**/
 GO
 Create Proc Korisnik_Delete
-@korisnik_id int
+@email nvarchar(50)
 AS
 Begin TRY
-Delete from Korisnici where korisnik_id = @korisnik_id
+Delete from Korisnici where email = @email
 RETURN 0
 END TRY
 BEGIN CATCH
@@ -260,7 +255,7 @@ END CATCH
 GO
 /**/
 GO
-Create PROC Proizvodi_Insert_1
+Create PROC Proizvodi_Insert
 @ime nvarchar(100),
 @sifra nvarchar(12),
 @cena int,
@@ -282,7 +277,6 @@ BEGIN CATCH
 	RETURN @@ERROR;
 END CATCH
 GO
-drop PROC Proizvodi_Insert_1
 /**/
 Create PROC Proizvodi_Update
 @proizvod_id int,
@@ -326,7 +320,7 @@ GO
 CREATE PROC Proizvodi_Svi
 AS
 BEGIN TRY
-	SELECT * FROM Proizvodi
+	SELECT * FROM Proizvodi1
 END TRY
 BEGIN CATCH
 	RETURN @@ERROR;
@@ -529,8 +523,13 @@ GO
 /*** PROC EXEC **********************************************************/
 
 exec dbo.UlogeKorisnika_Insert 'admin'
+exec dbo.UlogeKorisnika_Insert 'prodavac'
+exec dbo.UlogeKorisnika_Insert 'kupac'
 
 exec dbo.Korisnik_Insert 'Vuk','Zdravkovic','vukz','12345','vukz@gmail.com','Srbija','Beograd',11000,'Visegradska 24',2
-select * from Korisnici
+
+exec dbo.Kategorija_Select
+exec dbo.Korisnici_Select
+exec dbo.Proizvodi_Svi
 
 

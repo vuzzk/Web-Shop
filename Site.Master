@@ -8,6 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="Content/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
 
     <title>Prodavnica</title>
     <asp:ContentPlaceHolder ID="head" runat="server">
@@ -16,61 +17,59 @@
 <body>
     <form id="form1" runat="server">
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <a class="navbar-brand" href="#">
+            <a class="navbar-brand" href="home.aspx">
                 <img src="Resources/logoWhite.png" />
             </a>
             <div class="collapse navbar-collapse" id="navbarNav">
               <ul class="navbar-nav ml-auto">
                 <li class="nav-item active">
-                  <a class="nav-link" href="#">Početna</a>
+                  <a class="nav-link" href="home.aspx">Početna</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="#">Prodavnica</a>
+                  <a class="nav-link" href="shop.aspx">Prodavnica</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="#">O nama</a>
+                  <a class="nav-link" href="about.aspx">O nama</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="#">Kontakt</a>
+                  <a class="nav-link" href="contact.aspx">Kontakt</a>
                 </li>
               </ul>
             </div>
             <div class="navbar-nav ml-auto">
-              <a class="nav-link" href="#">
-                <button type="button" class="btn btn-outline-light">Korpa</button>
-              </a>
-              <a class="nav-link" href="#">
-                <button type="button" class="btn btn-outline-light">Moj Nalog</button>
-              </a>
+                <asp:Button ID="btnCart" runat="server" Text="Korpa" CssClass="btn btn-outline-light" style="margin-right: 5px;" OnClick="btnCart_Click" Visible="false"/>
+                <asp:Button ID="btnMyAccount" runat="server" Text="Moj nalog" CssClass="btn btn-outline-light" style="margin-right: 5px;" OnClick="btnMyAccount_Click" Visible="false"/>
+                <asp:Button ID="btnSignIn" runat="server" Text="Prijavite se" CssClass="btn btn-outline-light" style="margin-right: 5px;" OnClick="btnSignIn_Click" />
             </div>
         </nav>
 
-      <!-- Call to Action Image -->
-        <div class="jumbotron jumbotron-fluid position-relative" style="background-image: url('Resources/baner3.png'); height: calc(100vh - 56px); background-size: cover;">
-          <div class="mask"></div>
-          <div class="container text-center">
-            <h1 class="text-white font-weight-bold" style="text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);">Kod nas možete pronaći BAŠ sve!</h1>
-            <a class="btn btn-outline-light btn-lg btn-thick" href="#" role="button">UVERITE SE I SAMI</a>
-          </div>
-        </div>
-
-        <style>
-          .container {
-              position: absolute;
-              top: 50%;
-              left: 50%;
-              transform: translate(-50%, -50%);
-          }
-          .btn-thick{
-              border-width: 3px;
-              padding: 12px 24px;
-          }
-        </style>
+        
 
         <div>
             <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
             </asp:ContentPlaceHolder>
         </div>
+
+        <footer class="bg-dark text-light py-4">
+            <div class="container">
+                <div class="row">
+                    <div class="col">
+                        <ul class="list-unstyled d-flex justify-content-center">
+                            <li><a href="home.aspx" class="mx-2 text-light">Home</a></li>
+                            <li><a href="shop.aspx" class="mx-2 text-light">Shop</a></li>
+                            <li><a href="about.aspx" class="mx-2 text-light">About Us</a></li>
+                            <li><a href="contact.aspx" class="mx-2 text-light">Contact</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <hr class="my-4">
+                <div class="row">
+                    <div class="col">
+                        <p class="text-center m-0">© 2023 Vuk Zdravković. Sva prava zadržana.</p>
+                    </div>
+                </div>
+            </div>
+        </footer>
     </form>
 
     <script src="Scripts/jquery-3.6.4.min.js"></script>

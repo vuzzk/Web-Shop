@@ -4,17 +4,69 @@
 
 <html>
 <head runat="server">
-    <title></title>
-    <link rel="stylesheet" href="/CSS/admin.css" type="text/css" />
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="Content/bootstrap.min.css" rel="stylesheet">
+    
+
+    <title>Administrator</title>
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
 </head>
 <body>
     <form id="form1" runat="server">
-        <div>
-            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
-            </asp:ContentPlaceHolder>
+        <nav class="navbar navbar-dark bg-dark">
+            <div class="container-fluid">
+                <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-2" href="#">Kontrolna tabla</a>
+                <asp:Button ID="btnLogout" runat="server" Text="Odjavite se" CssClass="btn btn-outline-light" OnClick="btnLogout_Click" />
+            </div>
+        </nav>
+
+        <div class="container-fluid">
+            <div class="row">
+                <nav class="col-md-3 col-lg-2 d-md-block bg-light sidebar sidebar text-light" style="height: calc(100vh - 56px);">
+                    <div class="sidebar-sticky">
+                        <ul class="nav flex-column">
+                            <li class="nav-item">
+                                <a class="nav-link active" href="adminhome.aspx">Početna</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" href="users.aspx">Vidite korisnike</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" href="adduser.aspx">Dodajte korisnika</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" href="#">Vidite kategorije</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" href="addcategory.aspx">Dodajte kategoriju</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" href="#">Vidite proizvode</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" href="addproduct.aspx">Dodajte proizvod</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" href="#">Vidite porudžbine</a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+                <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+                    <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+                    </asp:ContentPlaceHolder>
+                </main>
+            </div>
         </div>
     </form>
+
+
+    <script src="Scripts/jquery-3.6.4.min.js"></script>
+    <script src="Scripts/bootstrap.min.js"></script>
+    <script src="Scripts/umd/popper.min.js"></script>
+    
 </body>
 </html>

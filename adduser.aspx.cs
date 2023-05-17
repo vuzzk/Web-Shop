@@ -1,5 +1,4 @@
-﻿using Microsoft.SqlServer.Server;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,31 +7,31 @@ using System.Web.UI.WebControls;
 
 namespace Web_Shop
 {
-    public partial class SignUp : System.Web.UI.Page
+    public partial class adduser : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
 
         }
 
-        protected void btnRegister_Click(object sender, EventArgs e)
+        protected void btnAddCategory_Click(object sender, EventArgs e)
         {
             WebShop unos_korisnika = new WebShop();
-            int rezultat_kategorija = unos_korisnika.Unos_Korisnika(txtName.Text, txtSurname.Text, txtUsername.Text, txtPassword.Text, txtEmail.Text, txtCountry.Text, txtCity.Text, Convert.ToInt32(txtPostCode.Text), txtAdress.Text, 4);
+            int rezultat_kategorija = unos_korisnika.Unos_Korisnika(txtName.Text, txtSurname.Text, txtUsername.Text, txtPassword.Text, txtMail.Text, txtCountry.Text, txtCity.Text, Convert.ToInt32(txtPostcode.Text), txtAdress.Text, 4);
 
 
             if (rezultat_kategorija == 0)
             {
+                successMessage.Visible = true;
                 txtSurname.Text = "";
                 txtName.Text = "";
                 txtUsername.Text = "";
-                txtEmail.Text = "";
+                txtMail.Text = "";
                 txtPassword.Text = "";
                 txtCountry.Text = "";
                 txtCity.Text = "";
-                txtPostCode.Text = "";
+                txtPostcode.Text = "";
                 txtAdress.Text = "";
-                Response.Redirect("home.aspx");
             }
             else
             {
@@ -40,22 +39,10 @@ namespace Web_Shop
             }
         }
 
-        protected void btnNext_Click(object sender, EventArgs e)
-        {
-            part1.Visible = false;
-            part2.Visible = true;
-
-        }
-
-        protected void btnBack_Click(object sender, EventArgs e)
-        {
-            part1.Visible = true;
-            part2.Visible = false;
-        }
-
         protected void btnClose_Click(object sender, EventArgs e)
         {
             failureMessage.Visible = false;
+            successMessage.Visible = false;
         }
     }
 }
