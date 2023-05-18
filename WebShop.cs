@@ -80,7 +80,7 @@ namespace Web_Shop
             return rezultat;
         }
 
-        public int Izmena_Korisnika(string ime, string prezime, string email, string drzava, string grad, int postanski_br, string adresa, int uloga_korisnika_id)
+        public int Izmena_Korisnika(string ime, string prezime, string username, string lozinka, string email, string drzava, string grad, int postanski_br, string adresa, int uloga_korisnika_id)
         {
 
             conn.ConnectionString = wqbConfig;
@@ -88,10 +88,12 @@ namespace Web_Shop
 
             comm.Connection = conn;
             comm.CommandType = CommandType.StoredProcedure;
-            comm.CommandText = "dbo.Korisnik_Update";
+            comm.CommandText = "dbo.Korisnik_Izmeni";
             // kolekcija Parameters
             comm.Parameters.Add(new SqlParameter("@ime", SqlDbType.NVarChar, 100, ParameterDirection.Input, false, 0, 0, "", DataRowVersion.Current, ime));
             comm.Parameters.Add(new SqlParameter("@prezime", SqlDbType.NVarChar, 100, ParameterDirection.Input, false, 0, 0, "", DataRowVersion.Current, prezime));
+            comm.Parameters.Add(new SqlParameter("@username", SqlDbType.NVarChar, 30, ParameterDirection.Input, false, 0, 0, "", DataRowVersion.Current, username));
+            comm.Parameters.Add(new SqlParameter("@lozinka", SqlDbType.NVarChar, 255, ParameterDirection.Input, false, 0, 0, "", DataRowVersion.Current, lozinka));
             comm.Parameters.Add(new SqlParameter("@email", SqlDbType.NVarChar, 50, ParameterDirection.Input, false, 0, 0, "", DataRowVersion.Current, email));
             comm.Parameters.Add(new SqlParameter("@drzava", SqlDbType.NVarChar, 100, ParameterDirection.Input, false, 0, 0, "", DataRowVersion.Current, drzava));
             comm.Parameters.Add(new SqlParameter("@grad", SqlDbType.NVarChar, 100, ParameterDirection.Input, false, 0, 0, "", DataRowVersion.Current, grad));
@@ -174,7 +176,27 @@ namespace Web_Shop
             return rezultat;
         }
 
+        public int Uloga_Korisnika(string email)
+        {
+            int uloga_id = -1;
 
+            conn.ConnectionString = wqbConfig;
+
+            comm.Connection = conn;
+            comm.CommandType = CommandType.StoredProcedure;
+            comm.CommandText = "Korisnik_Uloga";
+            // kolekcija Parameters
+            comm.Parameters.Add(new SqlParameter("@email", SqlDbType.NVarChar, 50, ParameterDirection.Input, false, 0, 0, "", DataRowVersion.Current, email));
+            SqlParameter  roleParameter = new SqlParameter("@uloga_korisnika_id", SqlDbType.Int, 4, ParameterDirection.Output, false, 0, 0, "", DataRowVersion.Current, uloga_id);
+            comm.Parameters.Add(roleParameter);
+
+            conn.Open();
+            comm.ExecuteNonQuery();
+            conn.Close();
+
+            uloga_id = (int)roleParameter.Value;
+            return uloga_id;
+        }
 
         public int Unos_Kategorija(string ime,string opis,string slika)
         {
@@ -279,7 +301,8 @@ namespace Web_Shop
 
             comm.Connection = conn;
             comm.CommandType = CommandType.StoredProcedure;
-            comm.CommandText = "Korisnik_Nalog '" + email + "'";
+            comm.CommandText = "Korisnik_Nalog";
+            comm.Parameters.Add(new SqlParameter("@email", SqlDbType.NVarChar, 50, ParameterDirection.Input, false, 0, 0, "", DataRowVersion.Current, email));
             conn.Open();
             comm.ExecuteNonQuery();
             conn.Close();
@@ -315,7 +338,61 @@ namespace Web_Shop
             return (ds);
         }
 
+        public int Broj_Korisnika()
+        {
+            int broj = 0;
 
+            using (SqlConnection conn = new SqlConnection(wqbConfig))
+            {
+                using (SqlCommand comm = new SqlCommand("Broj_Korisnika", conn))
+                {
+                    comm.CommandType = CommandType.StoredProcedure;
+
+                    // Create the output parameter
+                    SqlParameter countParameter = new SqlParameter("@BrojKorisnika", SqlDbType.Int);
+                    countParameter.Direction = ParameterDirection.Output;
+                    comm.Parameters.Add(countParameter);
+
+                    conn.Open();
+                    comm.ExecuteNonQuery();
+
+                    // Retrieve the output parameter value
+                    broj = (int)countParameter.Value;
+
+                    conn.Close();
+                }
+            }
+
+            return broj;
+        }
+
+        public int Broj_Proizvoda()
+        {
+            int broj = 0;
+
+            using (SqlConnection conn = new SqlConnection(wqbConfig))
+            {
+                using (SqlCommand comm = new SqlCommand("Broj_Proizvoda", conn))
+                {
+                    comm.CommandType = CommandType.StoredProcedure;
+
+                    // Create the output parameter
+                    SqlParameter countParameter = new SqlParameter("@BrojProizvoda", SqlDbType.Int);
+                    countParameter.Direction = ParameterDirection.Output;
+                    comm.Parameters.Add(countParameter);
+
+                    conn.Open();
+                    comm.ExecuteNonQuery();
+
+                    // Retrieve the output parameter value
+                    broj = (int)countParameter.Value;
+
+                    conn.Close();
+                }
+            }
+
+            return broj;
+        }
     }
  
 }

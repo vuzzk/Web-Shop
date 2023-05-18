@@ -23,6 +23,9 @@
 
         <hr />
 
+        <asp:Label ID="lblError" runat="server" CssClass="text-danger" Visible="false"></asp:Label>
+
+
         <div class="form-group">
             <h5>Name</h5>
             <asp:TextBox ID="txtName" runat="server" CssClass="form-control shadow" ReadOnly="true"></asp:TextBox>
@@ -45,7 +48,7 @@
 
         <div class="form-group">
             <h5 style="margin-top:10px;">Password</h5>
-            <asp:TextBox ID="txtPassword" runat="server" CssClass="form-control shadow" TextMode="Password" ReadOnly="true"></asp:TextBox>
+            <asp:TextBox ID="txtPassword" runat="server" CssClass="form-control shadow" ReadOnly="true"></asp:TextBox>
         </div>
 
         <div class="form-group">

@@ -10,16 +10,18 @@ namespace Web_Shop
     public partial class home : System.Web.UI.Page
     {
         string mail = "";
+        int role = -1;
         bool signed = false;
 
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
-                // Check if the user is logged in
                 if (Session["LoggedIn"] != null && (bool)Session["LoggedIn"])
                 {
                     mail = Session["mail"].ToString();
+                    role = (int)Session["role"];
+                    Session["user_role"] = role;
                     signed = true;
                 }
                 else
@@ -27,6 +29,7 @@ namespace Web_Shop
                     
                 }
             }
+            
         }
     }
 }

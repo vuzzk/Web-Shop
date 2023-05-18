@@ -17,9 +17,11 @@ namespace Web_Shop
 
         protected void btnRegister_Click(object sender, EventArgs e)
         {
-            WebShop unos_korisnika = new WebShop();
-            int rezultat_kategorija = unos_korisnika.Unos_Korisnika(txtName.Text, txtSurname.Text, txtUsername.Text, txtPassword.Text, txtEmail.Text, txtCountry.Text, txtCity.Text, Convert.ToInt32(txtPostCode.Text), txtAdress.Text, 4);
+            int role = 4;
+            string email = txtEmail.Text;
 
+            WebShop unos_korisnika = new WebShop();
+            int rezultat_kategorija = unos_korisnika.Unos_Korisnika(txtName.Text, txtSurname.Text, txtUsername.Text, txtPassword.Text, txtEmail.Text, txtCountry.Text, txtCity.Text, Convert.ToInt32(txtPostCode.Text), txtAdress.Text, role);
 
             if (rezultat_kategorija == 0)
             {
@@ -32,6 +34,10 @@ namespace Web_Shop
                 txtCity.Text = "";
                 txtPostCode.Text = "";
                 txtAdress.Text = "";
+
+                Session["LoggedIn"] = true;
+                Session["mail"] = email;
+                Session["role"] = role;
                 Response.Redirect("home.aspx");
             }
             else

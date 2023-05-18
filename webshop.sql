@@ -161,9 +161,11 @@ END CATCH
 GO
 /**/
 GO
-Create PROC Korisnik_Update
+Create PROC Korisnik_Izmeni
 @ime nvarchar(100),
 @prezime nvarchar(100),
+@username nvarchar(30),
+@lozinka nvarchar(255),
 @email nvarchar(50),
 @drzava nvarchar(100),
 @grad nvarchar(100),
@@ -179,7 +181,7 @@ BEGIN TRY
 
 	BEGIN
 	
-	Update Korisnici Set ime=@ime, prezime=@prezime, drzava=@drzava, grad=@grad, postanski_br=@postanski_br, adresa=@adresa, uloga_korisnika_id=@uloga_korisnika_id where email = @email
+	Update Korisnici Set ime=@ime, prezime=@prezime, username=@username, lozinka=@lozinka, drzava=@drzava, grad=@grad, postanski_br=@postanski_br, adresa=@adresa, uloga_korisnika_id=@uloga_korisnika_id where email = @email
 		RETURN 0;
 	END
 	RETURN -1;
@@ -213,7 +215,43 @@ BEGIN CATCH
 END CATCH
 GO
 
-/*** TABELA KORISNIK *****************************************************/
+Create PROC Korisnik_Nalog
+@email nvarchar(50)
+AS
+BEGIN TRY
+	Select ime, prezime, username, email, lozinka, grad, drzava, postanski_br, adresa FROM Korisnici 
+		WHERE email = @email
+END TRY
+BEGIN CATCH
+	RETURN @@ERROR;
+END CATCH
+GO
+/**/
+GO
+Create Proc Korisnik_Uloga
+@email nvarchar(50),
+@uloga_korisnika_id int OUTPUT
+AS
+BEGIN TRY
+	SELECT @uloga_korisnika_id = uloga_korisnika_id
+    FROM Korisnici
+    WHERE email = @email;
+END TRY
+BEGIN CATCH
+	SET @uloga_korisnika_id = -1;
+END CATCH
+GO
+/**/
+GO
+CREATE PROCEDURE Broj_Korisnika
+@BrojKorisnika INT OUTPUT
+AS
+BEGIN
+    SELECT @BrojKorisnika = COUNT(*) FROM Korisnici;
+END
+GO
+
+/*** TABELA ULOGA KORISNIKA *****************************************************/
 
 Create proc UlogeKorisnika_Insert
 @naziv NVARCHAR(100)
@@ -326,8 +364,15 @@ BEGIN CATCH
 	RETURN @@ERROR;
 END CATCH
 GO
-/*IMA JOS DA SE DODA*/
-
+/**/
+GO
+CREATE PROCEDURE Broj_Proizvoda
+@BrojProizvoda INT OUTPUT
+AS
+BEGIN
+    SELECT @BrojProizvoda = COUNT(*) FROM Proizvodi1;
+END
+GO
 
 /*** TABELA KATEGORIJE *****************************************************/
 
@@ -532,4 +577,8 @@ exec dbo.Kategorija_Select
 exec dbo.Korisnici_Select
 exec dbo.Proizvodi_Svi
 
+exec dbo.Korisnik_Nalog 'stojans@gmail.com'
+exec dbo.Korisnik_Nalog 'vukz@gmail.com'
+
+exec dbo.Korisnik_Izmeni 'Vuk','Zdravkovic','vukoslav','2004','vukz@gmail.com','Srbija','Beograd',11000,'Visegradska 26',2
 

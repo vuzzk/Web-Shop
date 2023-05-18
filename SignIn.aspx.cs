@@ -17,20 +17,32 @@ namespace Web_Shop
         protected void btnSignIn_Click(object sender, EventArgs e)
         {
             WebShop _login = new WebShop();
-            int rezultat;
 
+            int rezultat;
+            int role;
 
             string email = txtEmail.Text;
             string password = txtPassword.Text;
 
-            rezultat = _login.Provera_Admina(email, password);
+            rezultat = _login.Provera_Korisnika(email, password);
+
+            WebShop _login2 = new WebShop();
+            role = _login2.Uloga_Korisnika(email);
 
             if (rezultat == 0)
             {
                 Session["LoggedIn"] = true;
                 Session["mail"] = email;
+                Session["role"] = role;
 
-                Response.Redirect("home.aspx");
+                if (role == 2)
+                {
+                    Response.Redirect("adminhome.aspx");
+                }
+                else
+                {
+                    Response.Redirect("home.aspx");
+                }               
             }
             else
             {

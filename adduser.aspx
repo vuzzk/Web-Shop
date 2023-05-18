@@ -41,6 +41,12 @@
                 <label for="txtAdress" class="form-label">Adresa</label>
                 <asp:TextBox ID="txtAdress" runat="server" CssClass="form-control"></asp:TextBox>
             </div>
+            <div class="mb-3">
+                <label for="DropDownListRole" class="form-label">Uloga</label>
+                <asp:DropDownList ID="DropDownListRole" runat="server" DataSourceID="SqlDataSource1" DataTextField="naziv" DataValueField="uloga_korisnika_id" OnSelectedIndexChanged="DropDownList1_SelectedIndexChanged">
+                </asp:DropDownList>
+                <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:webshopConnectionString %>" SelectCommand="SELECT * FROM [UlogeKorisnika]" OnSelecting="SqlDataSource1_Selecting"></asp:SqlDataSource>
+            </div>
             <div class="alert alert-success" id="successMessage" runat="server" visible="false">
                 Korisnik uspešno dodat!
                 <asp:Button ID="btnCloseSuccess" runat="server" type="button" data-dismiss="alert" aria-label="Close" Text="" CssClass="btn-close" OnClick="btnClose_Click" />            </div>

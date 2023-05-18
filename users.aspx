@@ -39,36 +39,54 @@
                             <asp:Button ID="btnEdit" runat="server" Text="Edit" CssClass="btn btn-primary" OnClick="btnEdit_Click" CommandArgument='<%# Eval("email") %>' />
                             <asp:Button ID="btnDelete" runat="server" Text="Delete" CssClass="btn btn-danger" OnClick="btnDelete_Click" CommandArgument='<%# Eval("email") %>' />
                         
+                            <asp:SqlDataSource ID="SqlDataSource3" runat="server" ConnectionString="<%$ ConnectionStrings:webshopConnectionString %>"
+                                SelectCommand="SELECT ime, prezime, username, lozinka, email, drzava, grad, postanski_br, adresa,uloga_korisnika_id 
+                                                FROM [Korisnici] WHERE email = @Email">
+                                <SelectParameters>
+                                    <asp:Parameter Name="Email" Type="String"/>
+                                </SelectParameters>
+                            </asp:SqlDataSource>
                             <asp:Panel ID="Panel1" runat="server" Visible="False">
                                 <div class="form-group">
-                                    <label for="txtEditName">Name:</label>
+                                    <label for="txtEditName">Ime:</label>
                                     <asp:TextBox ID="txtEditName" runat="server" CssClass="form-control"></asp:TextBox>
                                 </div>
                                 <div class="form-group">
-                                    <label for="txtEditSurname">Surname:</label>
+                                    <label for="txtEditSurname">Prezime:</label>
                                     <asp:TextBox ID="txtEditSurname" runat="server" CssClass="form-control"></asp:TextBox>
                                 </div>
                                 <div class="form-group">
-                                    <label for="txtEditCountry">Country:</label>
+                                    <label for="txtEditUsername">Korisničko ime:</label>
+                                    <asp:TextBox ID="txtEditUsername" runat="server" CssClass="form-control"></asp:TextBox>
+                                </div>
+                                <div class="form-group">
+                                    <label for="txtEditMail">Mejl:</label>
+                                    <asp:TextBox ID="txtEditMail" runat="server" CssClass="form-control"></asp:TextBox>
+                                </div>
+                                <div class="form-group">
+                                    <label for="txtEditCountry">Država:</label>
                                     <asp:TextBox ID="txtEditCountry" runat="server" CssClass="form-control"></asp:TextBox>
                                 </div>
                                 <div class="form-group">
-                                    <label for="txtEditCity">City:</label>
+                                    <label for="txtEditCity">Grad:</label>
                                     <asp:TextBox ID="txtEditCity" runat="server" CssClass="form-control"></asp:TextBox>
                                 </div>
                                 <div class="form-group">
-                                    <label for="txtEditPostCode">Post Code:</label>
+                                    <label for="txtEditPostCode">Poštanski broj:</label>
                                     <asp:TextBox ID="txtEditPostCode" runat="server" CssClass="form-control"></asp:TextBox>
                                 </div>
                                 <div class="form-group">
-                                    <label for="txtEditAddress">Address:</label>
+                                    <label for="txtEditAddress">Adresa:</label>
                                     <asp:TextBox ID="txtEditAddress" runat="server" CssClass="form-control"></asp:TextBox>
                                 </div>
                                 <div class="form-group">
-                                    <label for="txtEditRole">Role:</label>
-                                    <asp:TextBox ID="txtEditRole" runat="server" CssClass="form-control"></asp:TextBox>
+                                    <label for="DropDownListRole">Uloga:</label>
+                                    <asp:DropDownList ID="DropDownListRole" runat="server" DataSourceID="SqlDataSource2" DataTextField="naziv" DataValueField="uloga_korisnika_id" OnSelectedIndexChanged="DropDownList1_SelectedIndexChanged">
+                                    </asp:DropDownList>
+                                    <asp:SqlDataSource ID="SqlDataSource2" runat="server" ConnectionString="<%$ ConnectionStrings:webshopConnectionString %>" SelectCommand="SELECT * FROM [UlogeKorisnika]" OnSelecting="SqlDataSource1_Selecting"></asp:SqlDataSource>
                                 </div>
                                 <asp:Button ID="btnSave" runat="server" Text="Sačuvaj" CssClass="btn btn-success" style="margin-top: 10px" OnClick="btnSave_Click" />
+                                <asp:Button ID="btnCancel" runat="server" Text="Prekini" CssClass="btn btn-danger" style="margin-top: 10px" OnClick="btnCancel_Click" />
                             </asp:Panel>
                         </div>  
                       

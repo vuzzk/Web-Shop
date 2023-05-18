@@ -19,12 +19,24 @@ namespace Web_Shop
         protected void btnAddProduct_Click(object sender, EventArgs e)
         {
             WebShop unos_proizvoda = new WebShop();
-            int rezultat_proizvod = unos_proizvoda.Unos_Proizvoda(txtName.Text, txtSKU.Text, Convert.ToInt32(txtPrice.Text), Convert.ToInt32(txtQuantuty.Text), txtProducer.Text, Convert.ToInt32(DropDownListCategory.SelectedItem.Value));
+            int rezultat_proizvod = -1;
+
+            if (txtName.Text != "" && txtSKU.Text != "" && txtPrice.Text != "" && txtQuantuty.Text != "" && txtProducer.Text != "")
+            {
+               rezultat_proizvod = unos_proizvoda.Unos_Proizvoda(txtName.Text, txtSKU.Text, Convert.ToInt32(txtPrice.Text), Convert.ToInt32(txtQuantuty.Text), txtProducer.Text, Convert.ToInt32(DropDownListCategory.SelectedItem.Value));
+
+            }
+            else
+            {
+                failureMessage1.Visible = true;
+            }
 
             if (rezultat_proizvod == 0)
             {
                 Session["sifra_proizvoda"] = txtSKU.Text;
                 successMessage1.Visible = true;
+
+                Panel1.Enabled = true;
             }
             else
             {
@@ -42,8 +54,17 @@ namespace Web_Shop
             }
 
             WebShop unos_opisa = new WebShop();
-            int rezultat_opis = unos_opisa.Unos_Opisa(txtDescription.Text, Session["sifra_proizvoda"].ToString(), filePath, filePath, filePath, filePath);
+            int rezultat_opis = -1;
 
+            if (txtDescription.Text != "")
+            {
+                rezultat_opis = unos_opisa.Unos_Opisa(txtDescription.Text, Session["sifra_proizvoda"].ToString(), filePath, filePath, filePath, filePath);
+
+            }
+            else
+            {
+                failureMessage2.Visible = true;
+            }
 
             if (rezultat_opis == 0)
             {

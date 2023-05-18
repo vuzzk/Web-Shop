@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -11,7 +12,7 @@ namespace Web_Shop
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            
         }
 
         protected void btnEdit_Click(object sender, EventArgs e)
@@ -26,26 +27,47 @@ namespace Web_Shop
             {
                 editSubContainer.Visible = true;
 
+                SqlDataSource SqlDataSource3 = (SqlDataSource)row.FindControl("SqlDataSource3");
+                SqlDataSource3.SelectParameters["Email"].DefaultValue = email;
                 TextBox txtEditName = (TextBox)row.FindControl("txtEditName");
                 TextBox txtEditSurname = (TextBox)row.FindControl("txtEditSurname");
+                TextBox txtEditUsername = (TextBox)row.FindControl("txtEditUsername");
+                TextBox txtEditMail = (TextBox)row.FindControl("txtEditMail");
                 TextBox txtEditCountry = (TextBox)row.FindControl("txtEditCountry");
                 TextBox txtEditCity = (TextBox)row.FindControl("txtEditCity");
                 TextBox txtEditPostCode = (TextBox)row.FindControl("txtEditPostCode");
                 TextBox txtEditAddress = (TextBox)row.FindControl("txtEditAddress");
-                TextBox txtEditRole = (TextBox)row.FindControl("txtEditRole");
+                SqlDataSource SqlDataSource2 = (SqlDataSource)row.FindControl("SqlDataSource2");
+                DropDownList DropDownListRole = (DropDownList)row.FindControl("DropDownListRole");
 
-                if (txtEditName != null && txtEditSurname != null && txtEditCountry != null && txtEditAddress != null && txtEditCity != null && txtEditRole != null && txtEditPostCode != null)
+                DataView dv = (DataView)SqlDataSource3.Select(DataSourceSelectArguments.Empty);
+                if (dv.Count > 0)
                 {
-                    ViewState["Name"] = txtEditName.Text;
-                    ViewState["Surname"] = txtEditSurname.Text;
-                    ViewState["Country"] = txtEditCountry.Text;
-                    ViewState["City"] = txtEditCity.Text;
-                    ViewState["PostCode"] = txtEditPostCode.Text;
-                    ViewState["Address"] = txtEditAddress.Text;
-                    ViewState["Role"] = txtEditRole.Text;
+                    DataRowView rowView = dv[0];
+
+                    txtEditName.Text = rowView["ime"].ToString();
+                    txtEditSurname.Text = rowView["prezime"].ToString();
+                    txtEditUsername.Text = rowView["username"].ToString();
+                    txtEditMail.Text = rowView["email"].ToString();
+                    txtEditCountry.Text = rowView["drzava"].ToString();
+                    txtEditCity.Text = rowView["grad"].ToString();
+                    txtEditPostCode.Text = rowView["postanski_br"].ToString();
+                    txtEditAddress.Text = rowView["adresa"].ToString();
+                    DropDownListRole.SelectedValue = rowView["uloga_korisnika_id"].ToString();
                 }
 
-                editSubContainer.Style["display"] = "block";
+                //if (txtEditName != null && txtEditSurname != null && txtEditCountry != null && txtEditAddress != null && txtEditCity != null && txtEditRole != null && txtEditPostCode != null)
+                //{
+                //    ViewState["Name"] = txtEditName.Text;
+                //    ViewState["Surname"] = txtEditSurname.Text;
+                //    ViewState["Country"] = txtEditCountry.Text;
+                //    ViewState["City"] = txtEditCity.Text;
+                //    ViewState["PostCode"] = txtEditPostCode.Text;
+                //    ViewState["Address"] = txtEditAddress.Text;
+                //    ViewState["Role"] = txtEditRole.Text;
+                //}
+
+                //editSubContainer.Style["display"] = "block";
             }
         }
 
@@ -60,17 +82,22 @@ namespace Web_Shop
             string address = ViewState["Address"] as string;
             string role = ViewState["Role"] as string;
 
-            WebShop izmena_korisnika = new WebShop();
-            int rezultat_korisnik = izmena_korisnika.Izmena_Korisnika(name, surname, mail, country, city, Convert.ToInt32(postCode), address, Convert.ToInt32(role));
+            //WebShop izmena_korisnika = new WebShop();
+            //int rezultat_korisnik = izmena_korisnika.Izmena_Korisnika(name, surname, mail, country, city, Convert.ToInt32(postCode), address, Convert.ToInt32(role));
 
-            if (rezultat_korisnik == 0)
-            {
-                Response.Redirect("users.aspx");
-            }
-            else
-            {
+            //if (rezultat_korisnik == 0)
+            //{
+            //    Response.Redirect("users.aspx");
+            //}
+            //else
+            //{
 
-            }
+            //}
+        }
+
+        protected void btnCancel_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("users.aspx");
         }
 
         protected void btnDelete_Click(object sender, EventArgs e)
@@ -98,6 +125,16 @@ namespace Web_Shop
         }
 
         protected void GridView1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void DropDownList1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void SqlDataSource1_Selecting(object sender, SqlDataSourceSelectingEventArgs e)
         {
 
         }

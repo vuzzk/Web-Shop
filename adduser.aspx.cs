@@ -44,5 +44,15 @@ namespace Web_Shop
             failureMessage.Visible = false;
             successMessage.Visible = false;
         }
+
+        protected void DropDownList1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void SqlDataSource1_Selecting(object sender, SqlDataSourceSelectingEventArgs e)
+        {
+
+        }
     }
 }

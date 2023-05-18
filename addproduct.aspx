@@ -45,7 +45,7 @@
             </div>
         </asp:Panel>
         <h2 class="mb-4">Dodajte opis proizvoda</h2>
-        <asp:Panel ID="Panel1" runat="server" DefaultButton="btnAddProduct" CssClass="form-horizontal">
+        <asp:Panel ID="Panel1" runat="server" DefaultButton="btnAddProduct" CssClass="form-horizontal" Enabled="false">
             <div class="mb-3">
                 <label for="txtDescription" class="form-label">Opis</label>
                 <asp:TextBox ID="txtDescription" runat="server" CssClass="form-control"></asp:TextBox>
