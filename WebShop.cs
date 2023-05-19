@@ -5,6 +5,7 @@ using System.Web;
 using System.Data;
 using System.Data.SqlClient;
 using System.Configuration;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Web_Shop
 {
@@ -392,6 +393,25 @@ namespace Web_Shop
             }
 
             return broj;
+        }
+
+        public string Slika_Proizvoda(string sifra)
+        {
+            conn.ConnectionString = wqbConfig;
+            string url;
+            comm.Connection = conn;
+            comm.CommandType = CommandType.StoredProcedure;
+            comm.CommandText = "dbo.Opis_GlavnaSlika";
+            // kolekcija Parameters
+            comm.Parameters.Add(new SqlParameter("@sifra", SqlDbType.NVarChar, 500, ParameterDirection.Input, false, 0, 0, "", DataRowVersion.Current, sifra));
+            comm.Parameters.Add(new SqlParameter("@slika1",SqlDbType.NVarChar, 500, ParameterDirection.Output, false, 0, 0, "", DataRowVersion.Current, null));
+
+            conn.Open();
+            comm.ExecuteNonQuery();
+            conn.Close();
+ 
+            url = comm.Parameters["@slika1"].Value.ToString();
+            return url;
         }
     }
  

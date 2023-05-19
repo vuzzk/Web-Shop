@@ -44,7 +44,7 @@
                                 <a class="nav-link active" href="addcategory.aspx">Dodajte kategoriju</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link active" href="#">Vidite proizvode</a>
+                                <a class="nav-link active" href="products.aspx">Vidite proizvode</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link active" href="addproduct.aspx">Dodajte proizvod</a>

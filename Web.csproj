@@ -73,6 +73,7 @@
     <Content Include="addproduct.aspx" />
     <Content Include="adduser.aspx" />
     <Content Include="adminhome.aspx" />
+    <Content Include="categories.aspx" />
     <Content Include="contact.aspx" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
@@ -92,9 +93,9 @@
     <Content Include="Content\bootstrap.rtl.min.css" />
     <Content Include="CSS\admin.css" />
     <Content Include="CSS\master.css" />
+    <Content Include="edituser.aspx" />
     <Content Include="home.aspx" />
-    <Content Include="index.html" />
-    <Content Include="korisnik1.aspx" />
+    <Content Include="products.aspx" />
     <Content Include="shop.aspx" />
     <Content Include="SignIn.aspx" />
     <Content Include="Scripts\bootstrap.bundle.js" />
@@ -236,12 +237,26 @@
     <Compile Include="adminhome.aspx.designer.cs">
       <DependentUpon>adminhome.aspx</DependentUpon>
     </Compile>
+    <Compile Include="categories.aspx.cs">
+      <DependentUpon>categories.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="categories.aspx.designer.cs">
+      <DependentUpon>categories.aspx</DependentUpon>
+    </Compile>
     <Compile Include="contact.aspx.cs">
       <DependentUpon>contact.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="contact.aspx.designer.cs">
       <DependentUpon>contact.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="edituser.aspx.cs">
+      <DependentUpon>edituser.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="edituser.aspx.designer.cs">
+      <DependentUpon>edituser.aspx</DependentUpon>
     </Compile>
     <Compile Include="home.aspx.cs">
       <DependentUpon>home.aspx</DependentUpon>
@@ -250,12 +265,12 @@
     <Compile Include="home.aspx.designer.cs">
       <DependentUpon>home.aspx</DependentUpon>
     </Compile>
-    <Compile Include="korisnik1.aspx.cs">
-      <DependentUpon>korisnik1.aspx</DependentUpon>
+    <Compile Include="products.aspx.cs">
+      <DependentUpon>products.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="korisnik1.aspx.designer.cs">
-      <DependentUpon>korisnik1.aspx</DependentUpon>
+    <Compile Include="products.aspx.designer.cs">
+      <DependentUpon>products.aspx</DependentUpon>
     </Compile>
     <Compile Include="shop.aspx.cs">
       <DependentUpon>shop.aspx</DependentUpon>

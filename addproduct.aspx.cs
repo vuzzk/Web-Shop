@@ -9,6 +9,7 @@ namespace Web_Shop
 {
     public partial class admin : System.Web.UI.Page
     {
+        string adresa = string.Empty;
         protected void Page_Load(object sender, EventArgs e)
         {
 
@@ -46,11 +47,30 @@ namespace Web_Shop
 
         protected void btnAddDescription_Click(object sender, EventArgs e)
         {
+            
             string filePath = string.Empty;
             if (fileProductImage.HasFile)
             {
-                filePath = Server.MapPath("~/Resources/") + fileProductImage.FileName;
-                fileProductImage.SaveAs(filePath);
+                string fileextension = System.IO.Path.GetExtension(fileProductImage.FileName);
+                if (fileextension.ToLower() !=  ".png")
+                {
+                    failureMessage2.Visible = true;
+                }
+                else
+                {
+                    int filesize = fileProductImage.PostedFile.ContentLength;
+                    if(filesize > 2242880)
+                    {
+                        failureMessage2.Visible = true;
+                    }
+                    else
+                    {
+                        fileProductImage.SaveAs(Server.MapPath("./Uploads/" + fileProductImage.FileName));
+                        adresa = "./Uploads/" + fileProductImage.FileName;
+
+                    }
+                }
+             
             }
 
             WebShop unos_opisa = new WebShop();
@@ -58,22 +78,22 @@ namespace Web_Shop
 
             if (txtDescription.Text != "")
             {
-                rezultat_opis = unos_opisa.Unos_Opisa(txtDescription.Text, Session["sifra_proizvoda"].ToString(), filePath, filePath, filePath, filePath);
-
+                rezultat_opis = unos_opisa.Unos_Opisa(txtDescription.Text, Session["sifra_proizvoda"].ToString(), adresa, adresa, adresa, adresa);
+                if (rezultat_opis == 0)
+                {
+                    successMessage2.Visible = true;
+                }
+                else
+                {
+                    failureMessage2.Visible = true;
+                }
             }
             else
             {
                 failureMessage2.Visible = true;
             }
 
-            if (rezultat_opis == 0)
-            {
-                successMessage2.Visible = true;
-            }
-            else
-            {
-                failureMessage2.Visible = true;
-            }
+            
         }
 
         protected void DropDownList1_SelectedIndexChanged(object sender, EventArgs e)

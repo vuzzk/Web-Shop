@@ -11,7 +11,7 @@ namespace Web_Shop
 {
 
 
-    public partial class korisnik1
+    public partial class categories
     {
     }
 }

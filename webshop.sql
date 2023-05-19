@@ -8,7 +8,7 @@ sifra varchar(12) not null,
 cena int,
 kolicina int not null,
 proizvodjac nvarchar(100) not null,
-kategorija_id int,
+kategorija_id int
 )
 
 Create table Opis1(
@@ -214,12 +214,13 @@ BEGIN CATCH
 	RETURN @@ERROR;
 END CATCH
 GO
-
+/**/
+GO
 Create PROC Korisnik_Nalog
 @email nvarchar(50)
 AS
 BEGIN TRY
-	Select ime, prezime, username, email, lozinka, grad, drzava, postanski_br, adresa FROM Korisnici 
+	Select ime, prezime, username, email, lozinka, grad, drzava, postanski_br, adresa, uloga_korisnika_id FROM Korisnici 
 		WHERE email = @email
 END TRY
 BEGIN CATCH
@@ -343,11 +344,10 @@ GO
 /**/
 GO
 CREATE PROC Proizvodi_Delete
-@proizvod_id int,
-@ime nvarchar(100)
+@sifra nvarchar(12)
 AS
 BEGIN TRY
-	DELETE FROM Proizvodi WHERE ime=@ime and proizvod_id=@proizvod_id
+	DELETE FROM Proizvodi WHERE sifra=@sifra
 	RETURN 0
 END TRY
 BEGIN CATCH
@@ -492,7 +492,7 @@ Create PROC Opisi_Insert_1
 AS
 SET LOCK_TIMEOUT 3000;
 BEGIN TRY
-	IF EXISTS(SELECT TOP 1 @sifra_proizvoda FROM Opis1
+	IF EXISTS(SELECT TOP 1 opis_id FROM Opis1
 	WHERE sifra_proiz = @sifra_proizvoda)
 	RETURN 1
 	ELSE
@@ -553,16 +553,23 @@ BEGIN CATCH
 END CATCH
 GO
 /**/
-Create proc Opisi_GlavnaSlika
-@opis_id nvarchar(max)
+GO
+CREATE PROCEDURE Opis_GlavnaSlika
+    @sifra nvarchar(max),
+    @slika1 nvarchar(max) OUTPUT
 AS
 BEGIN TRY
-	SELECT slika1 FROM Opisi WHERE opis_id = @opis_id
+    SELECT @slika1 = slika1 FROM Opis1 WHERE sifra_proiz = @sifra
 END TRY
 BEGIN CATCH
-	RETURN @@ERROR;
+    RETURN @@ERROR; 
 END CATCH
 GO
+/*** POGLEDI **********************************************************/
+
+
+
+
 
 
 /*** PROC EXEC **********************************************************/
@@ -582,3 +589,12 @@ exec dbo.Korisnik_Nalog 'vukz@gmail.com'
 
 exec dbo.Korisnik_Izmeni 'Vuk','Zdravkovic','vukoslav','2004','vukz@gmail.com','Srbija','Beograd',11000,'Visegradska 26',2
 
+
+exec Opis_GlavnaSlika '333'
+
+select * from Opis1
+
+exec Opisi_Insert_1 '888','t','color.png','color.png','color.png','color.png'
+exec Opisi_Insert_1 'r','t','./Slike/color.png','./Slike/color.png','./Slike/color.png','./Slike/color.png'
+
+exec Proizvodi_Delete 'ad1'
