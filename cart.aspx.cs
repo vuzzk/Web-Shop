@@ -16,8 +16,15 @@ namespace Web_Shop
         {
             if (!IsPostBack)
             {
-                BindCartItems();
-                CalculateAndDisplayCartTotal();
+                if (Session["LoggedIn"] != null && (bool)Session["LoggedIn"])
+                {
+                    BindCartItems();
+                    CalculateAndDisplayCartTotal();
+                }
+                else
+                {
+                    Response.Redirect("SignIn.aspx");
+                }
             }
         }
 

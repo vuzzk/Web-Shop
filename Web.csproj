@@ -99,6 +99,8 @@
     <Content Include="editproduct.aspx" />
     <Content Include="edituser.aspx" />
     <Content Include="home.aspx" />
+    <Content Include="orderdetails.aspx" />
+    <Content Include="orders.aspx" />
     <Content Include="products.aspx" />
     <Content Include="shop.aspx" />
     <Content Include="SignIn.aspx" />
@@ -298,6 +300,20 @@
     </Compile>
     <Compile Include="home.aspx.designer.cs">
       <DependentUpon>home.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="orderdetails.aspx.cs">
+      <DependentUpon>orderdetails.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="orderdetails.aspx.designer.cs">
+      <DependentUpon>orderdetails.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="orders.aspx.cs">
+      <DependentUpon>orders.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="orders.aspx.designer.cs">
+      <DependentUpon>orders.aspx</DependentUpon>
     </Compile>
     <Compile Include="products.aspx.cs">
       <DependentUpon>products.aspx</DependentUpon>

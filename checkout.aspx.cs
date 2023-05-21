@@ -58,7 +58,15 @@ namespace Web_Shop
                     int quantity = Convert.ToInt32(row["Quantity"]);
 
                     int stavkaPorudzbineResult = porudzbina.Stavka_Porudzbine(broj_racuna, SKU, quantity);
-                    if (stavkaPorudzbineResult != 0)
+                    if (stavkaPorudzbineResult == 2)
+                    {
+                        allItemsInserted = false;
+                        labelError.Visible = true;
+                        labelError.Text = "Nemamo toliku količinu proizvoda u zalihama";
+                        break;
+                        
+                    }
+                    if (stavkaPorudzbineResult == 1)
                     {
                         allItemsInserted = false;
                         break;

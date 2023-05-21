@@ -28,35 +28,31 @@ namespace Web_Shop
             return string.Empty;
         }
 
-        protected void lvCategories_ItemCommand(object sender, ListViewCommandEventArgs e)
-        {
-            if (e.CommandName == "CategoryClick")
-            {
-                string categoryName = e.CommandArgument.ToString();
-                // Perform the desired action based on the clicked category
-                // For example, you can call a method or redirect to a different page
-            }
-        }
-
         protected void btnSearch_Click(object sender, EventArgs e)
         {
-            // TODO: Implement search functionality
-        }
+            string searchText = txtSearch.Text.Trim();
 
-        protected void btnCategory_Click(object sender, EventArgs e)
-        {
-            // TODO: Implement category filtering
+            if (string.IsNullOrEmpty(searchText))
+            {
+                SqlDataSourceProducts.SelectCommand = "SELECT Ime, Sifra, Cena, Kategorija FROM ProdavnicaPrikaz";
+                SqlDataSourceProducts.SelectParameters.Clear();
+            }
+            else
+            {
+                SqlDataSourceProducts.SelectCommand = "SELECT Ime, Sifra, Cena, Kategorija FROM ProdavnicaPrikaz WHERE Ime LIKE '%' + @searchText + '%' OR Sifra LIKE '%' + @searchText + '%' OR Kategorija LIKE '%' + @searchText + '%'";
+                SqlDataSourceProducts.SelectParameters.Clear();
+                SqlDataSourceProducts.SelectParameters.Add("searchText", searchText);
+            }
+
+            rptProducts.DataBind();
         }
 
         protected void btnSeeProduct_Click(object sender, EventArgs e)
         {
-            // Get the button that raised the event
             Button btnSeeProduct = (Button)sender;
 
-            // Get the RepeaterItem associated with the button
             RepeaterItem item = (RepeaterItem)btnSeeProduct.NamingContainer;
 
-            // Get the sifra from the CommandArgument of the button
             string sifra = (string)btnSeeProduct.CommandArgument;
 
             Response.Redirect("singleproduct.aspx?sifra=" + sifra);

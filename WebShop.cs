@@ -415,7 +415,6 @@ namespace Web_Shop
                 {
                     comm.CommandType = CommandType.StoredProcedure;
 
-                    // Create the output parameter
                     SqlParameter countParameter = new SqlParameter("@BrojKorisnika", SqlDbType.Int);
                     countParameter.Direction = ParameterDirection.Output;
                     comm.Parameters.Add(countParameter);
@@ -423,7 +422,6 @@ namespace Web_Shop
                     conn.Open();
                     comm.ExecuteNonQuery();
 
-                    // Retrieve the output parameter value
                     broj = (int)countParameter.Value;
 
                     conn.Close();
@@ -443,7 +441,6 @@ namespace Web_Shop
                 {
                     comm.CommandType = CommandType.StoredProcedure;
 
-                    // Create the output parameter
                     SqlParameter countParameter = new SqlParameter("@BrojProizvoda", SqlDbType.Int);
                     countParameter.Direction = ParameterDirection.Output;
                     comm.Parameters.Add(countParameter);
@@ -451,7 +448,6 @@ namespace Web_Shop
                     conn.Open();
                     comm.ExecuteNonQuery();
 
-                    // Retrieve the output parameter value
                     broj = (int)countParameter.Value;
 
                     conn.Close();
@@ -665,10 +661,96 @@ namespace Web_Shop
                 {
                     rezultat = 0;
                 }
-                else
+                else if (Ret == -2)
                 {
-                    rezultat = 1;
+                    rezultat = 2;
                 }
+                else { rezultat = 1; }
+            }
+            return rezultat;
+        }
+
+        public string Mejl_Kupca(int order_number)
+        {
+            string mejl = "";
+
+            using (SqlConnection conn = new SqlConnection(wqbConfig))
+            {
+                using (SqlCommand comm = new SqlCommand("Mejl_Kupca", conn))
+                {
+                    comm.CommandType = CommandType.StoredProcedure;
+
+                    comm.Parameters.Add(new SqlParameter("@porudzbina_id", SqlDbType.Int, 4, ParameterDirection.Input, false, 0, 0, "", DataRowVersion.Current, order_number));
+                    SqlParameter mailParameter = new SqlParameter("@korisnik_email", SqlDbType.NVarChar,50);
+                    mailParameter.Direction = ParameterDirection.Output;
+                    comm.Parameters.Add(mailParameter);
+
+                    conn.Open();
+                    comm.ExecuteNonQuery();
+
+                    // Retrieve the output parameter value
+                    mejl = mailParameter.Value.ToString();
+
+                    conn.Close();
+                }
+            }
+
+            return mejl;
+        }
+
+        public string Napomena_Porudzbine(int order_number)
+        {
+            string napomena = "";
+
+            using (SqlConnection conn = new SqlConnection(wqbConfig))
+            {
+                using (SqlCommand comm = new SqlCommand("Napomena_Porudzbine", conn))
+                {
+                    comm.CommandType = CommandType.StoredProcedure;
+
+                    comm.Parameters.Add(new SqlParameter("@porudzbina_id", SqlDbType.Int, 4, ParameterDirection.Input, false, 0, 0, "", DataRowVersion.Current, order_number));
+                    SqlParameter mailParameter = new SqlParameter("@napomena", SqlDbType.NVarChar, 50);
+                    mailParameter.Direction = ParameterDirection.Output;
+                    comm.Parameters.Add(mailParameter);
+
+                    conn.Open();
+                    comm.ExecuteNonQuery();
+
+                    // Retrieve the output parameter value
+                    napomena = mailParameter.Value.ToString();
+
+                    conn.Close();
+                }
+            }
+            return napomena;
+        }
+
+        public int Kolicina_Dostupna(string sifra, int kolicina)
+        {
+
+            conn.ConnectionString = wqbConfig;
+            int rezultat;
+
+            comm.Connection = conn;
+            comm.CommandType = CommandType.StoredProcedure;
+            comm.CommandText = "Kolicina";
+            // kolekcija Parameters
+            comm.Parameters.Add(new SqlParameter("@proizvod_sifra", SqlDbType.NVarChar, 12, ParameterDirection.Input, false, 0, 0, "", DataRowVersion.Current, sifra));
+            comm.Parameters.Add(new SqlParameter("@kolicina", SqlDbType.Int, 4, ParameterDirection.Input, false, 0, 0, "", DataRowVersion.Current, kolicina));
+            comm.Parameters.Add(new SqlParameter("@RETURN_VALUE", SqlDbType.Int, 4, ParameterDirection.ReturnValue, true, 0, 0, "", DataRowVersion.Current, null));
+            conn.Open();
+            comm.ExecuteNonQuery();
+            conn.Close();
+
+            int Ret;
+            Ret = (int)comm.Parameters["@RETURN_VALUE"].Value;
+            if (Ret == 0)
+            {
+                rezultat = 0;
+            }
+            else
+            {
+                rezultat = 1;
             }
             return rezultat;
         }

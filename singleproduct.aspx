@@ -28,6 +28,7 @@
                         <asp:Button ID="btnPlus" runat="server" Text="+" CssClass="btn btn-secondary btn-quantity" OnClick="btnPlus_Click" />
                     </div>
                 </div>
+                <asp:Label ID="lblError" runat="server" CssClass="text-danger" Visible="false"></asp:Label>
 
                 <asp:Button ID="btnAddToCart" runat="server" Text="DODAJ U KORPU" CssClass="btn btn-primary" style="margin-top:20px; margin-bottom:20px" OnClick="btnAddToCart_Click" />
             </div>

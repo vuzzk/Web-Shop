@@ -627,11 +627,65 @@ BEGIN TRY
 	IF EXISTS(SELECT TOP 1 porudzbina_id FROM Porudzbine
 	WHERE porudzbina_id = @porudzbina_id)
 	BEGIN
-		INSERT INTO StavkePorudzbina(porudzbina_id, proizvod_sifra, kolicina)
-		VALUES (@porudzbina_id, @proizvod_sifra, @kolicina)
-		RETURN 0;
+		IF (SELECT kolicina FROM Proizvodi1 WHERE sifra = @proizvod_sifra) >= @kolicina
+		BEGIN
+			INSERT INTO StavkePorudzbina(porudzbina_id, proizvod_sifra, kolicina)
+			VALUES (@porudzbina_id, @proizvod_sifra, @kolicina);
+			
+			UPDATE Proizvodi1 SET kolicina = kolicina - @kolicina WHERE sifra = @proizvod_sifra;
+			
+			RETURN 0;
+		END
+		ELSE
+		BEGIN
+			RETURN -2;
+		END
 	END
-		RETURN -1;
+	RETURN -1;
+END TRY
+BEGIN CATCH
+	RETURN @@ERROR;
+END CATCH
+GO
+/**/
+GO
+CREATE PROCEDURE Mejl_Kupca 
+	@porudzbina_id int,
+	@korisnik_email nvarchar(50) OUTPUT
+AS
+SET LOCK_TIMEOUT 3000;
+BEGIN
+	SELECT @korisnik_email = korisnik_email
+    FROM Porudzbine
+    WHERE porudzbina_id = @porudzbina_id;
+END
+GO
+/**/
+GO
+CREATE PROCEDURE Napomena_Porudzbine 
+	@porudzbina_id int,
+	@napomena nvarchar(max) OUTPUT
+AS
+SET LOCK_TIMEOUT 3000;
+BEGIN
+	SELECT @napomena = napomena
+    FROM Porudzbine
+    WHERE porudzbina_id = @porudzbina_id;
+END
+GO
+/**/
+GO
+CREATE PROCEDURE Kolicina
+    @proizvod_sifra varchar(12),
+    @kolicina int
+AS
+SET LOCK_TIMEOUT 3000;
+BEGIN TRY 
+	IF (SELECT kolicina FROM Proizvodi1 WHERE sifra = @proizvod_sifra) >= @kolicina
+	BEGIN
+		RETURN 0;
+	END		
+	RETURN -1;
 END TRY
 BEGIN CATCH
 	RETURN @@ERROR;
@@ -644,8 +698,25 @@ CREATE VIEW PregledProizvoda AS
 SELECT P.ime, P.sifra, P.cena, P.kolicina, K.ime AS kategorija_ime
 FROM Proizvodi1 P
 JOIN Kategorije K ON P.kategorija_id = K.kategorija_id;
-
 select * from PregledProizvoda
+
+CREATE VIEW PregledPorudzbina AS
+SELECT P.porudzbina_id, CONCAT(K.ime, ' ', K.prezime) as 'korisnik', P.ukupan_iznos, P.datum_vreme, P.porudzbina_uspesna
+FROM Porudzbine P
+JOIN Korisnici K ON p.korisnik_email = k.email
+select * from PregledPorudzbina
+
+CREATE VIEW StavkePorudzbine AS
+SELECT S.porudzbina_id , P.ime, P.sifra, P.cena, S.kolicina, P.cena*S.kolicina as 'ukupno'
+FROM Proizvodi1 P
+JOIN StavkePorudzbina S ON P.sifra = S.proizvod_sifra
+select * from StavkePorudzbine
+
+CREATE VIEW ProdavnicaPrikaz AS
+SELECT P.ime, P.sifra, P.cena, K.ime as 'kategorija' FROM 
+Proizvodi1 P
+JOIN Kategorije K ON P.kategorija_id = K.kategorija_id
+select * from ProdavnicaPrikaz
 
 
 /*** PROC EXEC **********************************************************/
