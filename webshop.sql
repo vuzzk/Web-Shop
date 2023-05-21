@@ -13,7 +13,7 @@ kategorija_id int
 
 Create table Opis1(
 opis_id int primary key identity(1,1),
-sifra_proiz int,
+sifra_proiz varchar(12),
 tekst nvarchar(500),
 slika1 nvarchar(150),
 slika2 nvarchar(150),
@@ -49,28 +49,27 @@ naziv varchar(100) not null unique
 
 create table Porudzbine(
 porudzbina_id int primary key identity(1,1),
-korisnik_id int not null,
+korisnik_email nvarchar(255) not null,
 ukupan_iznos int not null,
 datum_vreme date default getdate() not null,
-porudzbina_uspesna varchar(2)
+porudzbina_uspesna varchar(2),
+napomena nvarchar(max)
 )
 
 create table StavkePorudzbina(
 stavka_porudzbine_id int primary key identity(1,1),
 porudzbina_id int not null,
-proizvod_id int not null,
+proizvod_sifra varchar(12) not null,
 kolicina int
 )
 
-ALTER table Proizvodi
-add constraint FK_opis_id
-FOREIGN KEY (opis_id)
-REFERENCES Opisi(opis_id);
-
-ALTER table Proizvodi
-add constraint FK_kategorija_id
+ALTER table Proizvodi1
+add constraint FK_kategorija_id_1
 FOREIGN KEY (kategorija_id)
 REFERENCES Kategorije(kategorija_id);
+
+ALTER TABLE Proizvodi1
+ADD CONSTRAINT UQ_Proizvodi1_sifra UNIQUE (sifra);
 
 ALTER table Korisnici
 add constraint FK_uloga_korisnika_id
@@ -78,19 +77,25 @@ FOREIGN KEY (uloga_korisnika_id)
 REFERENCES UlogeKorisnika(uloga_korisnika_id);
 
 ALTER table Porudzbine
-add constraint FK_korisnik_id
-FOREIGN KEY (korisnik_id)
-REFERENCES Korisnici(korisnik_id);
+add constraint FK_korisnik_email
+FOREIGN KEY (korisnik_email)
+REFERENCES Korisnici(email);
 
 ALTER table StavkePorudzbina
-add constraint FK_proizvod_id
-FOREIGN KEY (proizvod_id)
-REFERENCES Proizvodi(proizvod_id);
+add constraint FK_proizvod_sifra
+FOREIGN KEY (proizvod_sifra)
+REFERENCES Proizvodi1(sifra);
 
 ALTER table StavkePorudzbina
 add constraint FK_porudzbina_id
 FOREIGN KEY (porudzbina_id)
 REFERENCES Porudzbine(porudzbina_id);
+
+ALTER table Opis1
+add constraint FK_sifra_proizvoda
+FOREIGN KEY (sifra_proiz)
+REFERENCES Proizvodi1(sifra);
+
 
 /*** TABELA KORISNIK *****************************************************/
 GO
@@ -178,13 +183,11 @@ SET LOCK_TIMEOUT 3000;
 BEGIN TRY
 	IF EXISTS (SELECT TOP 1 ime FROM Korisnici
 	WHERE email = @email)
-
-	BEGIN
-	
-	Update Korisnici Set ime=@ime, prezime=@prezime, username=@username, lozinka=@lozinka, drzava=@drzava, grad=@grad, postanski_br=@postanski_br, adresa=@adresa, uloga_korisnika_id=@uloga_korisnika_id where email = @email
+	BEGIN	
+		Update Korisnici Set ime=@ime, prezime=@prezime, username=@username, lozinka=@lozinka, drzava=@drzava, grad=@grad, postanski_br=@postanski_br, adresa=@adresa, uloga_korisnika_id=@uloga_korisnika_id where email = @email
 		RETURN 0;
 	END
-	RETURN -1;
+		RETURN -1;
 END TRY
 BEGIN CATCH
 	RETURN @@ERROR;
@@ -317,22 +320,21 @@ BEGIN CATCH
 END CATCH
 GO
 /**/
+GO
 Create PROC Proizvodi_Update
-@proizvod_id int,
 @ime nvarchar(100),
 @sifra nvarchar(12),
 @cena int,
 @kolicina int,
 @proizvodjac nvarchar(100),
-@opis_id int,
 @kategorija_id int
 AS
 SET LOCK_TIMEOUT 3000;
 BEGIN TRY
-	IF EXISTS (SELECT TOP 1 ime FROM Proizvodi
-	WHERE proizvod_id = @proizvod_id )
+	IF EXISTS (SELECT TOP 1 ime FROM Proizvodi1
+	WHERE sifra = @sifra )
 	BEGIN	
-	UPDATE Proizvodi SET ime=@ime, sifra=@sifra, cena=@cena, kolicina=@kolicina, proizvodjac=@proizvodjac, opis_id=@opis_id, kategorija_id=@kategorija_id WHERE proizvod_id=@proizvod_id
+	UPDATE Proizvodi1 SET ime=@ime, cena=@cena, kolicina=@kolicina, proizvodjac=@proizvodjac, kategorija_id=@kategorija_id WHERE sifra = @sifra
 		RETURN 0;
 	END
 		RETURN -1;
@@ -347,7 +349,7 @@ CREATE PROC Proizvodi_Delete
 @sifra nvarchar(12)
 AS
 BEGIN TRY
-	DELETE FROM Proizvodi WHERE sifra=@sifra
+	DELETE FROM Proizvodi1 WHERE sifra=@sifra
 	RETURN 0
 END TRY
 BEGIN CATCH
@@ -372,6 +374,37 @@ AS
 BEGIN
     SELECT @BrojProizvoda = COUNT(*) FROM Proizvodi1;
 END
+GO
+/**/
+Go
+CREATE PROCEDURE Proizvod_Prikaz
+@sifra nvarchar(12)
+AS
+BEGIN TRY
+	SELECT p.ime, p.sifra, p.cena, p.kolicina, p.proizvodjac, p.kategorija_id, o.tekst AS 'tekst_opisa', o.slika1 AS 'slika_proizvoda'
+	FROM Proizvodi1 p
+	JOIN Opis1 o ON p.sifra = o.sifra_proiz		
+	WHERE p.sifra = @sifra
+END TRY
+BEGIN CATCH
+	RETURN @@ERROR;
+END CATCH
+GO
+/**/
+GO
+CREATE PROCEDURE Proizvod_Single_Prikaz
+@sifra nvarchar(12)
+AS
+BEGIN TRY
+	SELECT p.ime, p.sifra, p.cena, p.kolicina, p.proizvodjac, k.ime AS 'kategorija', o.tekst AS 'tekst_opisa', o.slika1 AS 'slika_proizvoda'
+	FROM Proizvodi1 p
+	JOIN Opis1 o ON p.sifra = o.sifra_proiz		
+	JOIN Kategorije k ON p.kategorija_id = k.kategorija_id
+	WHERE p.sifra = @sifra
+END TRY
+BEGIN CATCH
+	RETURN @@ERROR;
+END CATCH
 GO
 
 /*** TABELA KATEGORIJE *****************************************************/
@@ -439,11 +472,10 @@ GO
 /**/
 GO
 CREATE PROC Kategorije_Delete
-@kategorija_id int,
 @ime nvarchar(100)
 AS
 BEGIN TRY
-DELETE FROM Kategorije WHERE ime = @ime and kategorija_id = @kategorija_id
+DELETE FROM Kategorije WHERE ime = @ime
 RETURN 0
 END TRY
 BEGIN CATCH
@@ -508,7 +540,7 @@ GO
 /**/
 GO
 Create PROC Opisi_Update
-@opis_id int,
+@sifra nvarchar(12),
 @tekst nvarchar(500),
 @slika1 nvarchar(150),
 @slika2 nvarchar(150),
@@ -517,10 +549,10 @@ Create PROC Opisi_Update
 AS
 SET LOCK_TIMEOUT 3000;
 BEGIN TRY
-	IF EXISTS(SELECT TOP 1 opis_id FROM Opisi 
-	WHERE opis_id = @opis_id)
+	IF EXISTS(SELECT TOP 1 opis_id FROM Opis1
+	WHERE sifra_proiz = @sifra)
 	BEGIN	
-		UPDATE Opisi SET tekst = @tekst, slika1 = @slika1, slika2 = @slika2, slika3 = @slika3, slika4 = @slika4 WHERE opis_id = @opis_id
+		UPDATE Opis1 SET tekst = @tekst, slika1 = @slika1, slika2 = @slika2, slika3 = @slika3, slika4 = @slika4 WHERE sifra_proiz = @sifra
 		RETURN 0;
 	END
 	RETURN -1;
@@ -532,10 +564,10 @@ GO
 /**/
 GO
 Create Proc Opisi_Delete
-@opis_id int
+@sifra varchar(12)
 AS
 BEGIN TRY
-	DELETE FROM Opisi WHERE opis_id = @opis_id
+	DELETE FROM Opis1 WHERE sifra_proiz = @sifra
 	RETURN 0
 END TRY
 BEGIN CATCH
@@ -565,11 +597,55 @@ BEGIN CATCH
     RETURN @@ERROR; 
 END CATCH
 GO
+/*** PORUDZBINE *******************************************************/
+GO
+CREATE PROCEDURE Kreiraj_Porudzbinu
+    @korisnik_email nvarchar(50),
+    @ukupan_iznos int,
+    @porudzbina_uspesna varchar(2),
+	@napomena nvarchar(max),
+	@porudzbina_id int OUTPUT
+AS
+SET LOCK_TIMEOUT 3000;
+BEGIN
+	INSERT INTO Porudzbine(korisnik_email, ukupan_iznos, datum_vreme, porudzbina_uspesna, napomena)
+    VALUES (@korisnik_email, @ukupan_iznos, GETDATE(), @porudzbina_uspesna, @napomena)
+
+    SET @porudzbina_id = SCOPE_IDENTITY()
+	RETURN @porudzbina_id
+END
+GO
+/**/
+GO
+CREATE PROCEDURE Stavka_Porudzbine_Insert
+    @porudzbina_id int,
+    @proizvod_sifra varchar(12),
+    @kolicina int
+AS
+SET LOCK_TIMEOUT 3000;
+BEGIN TRY 
+	IF EXISTS(SELECT TOP 1 porudzbina_id FROM Porudzbine
+	WHERE porudzbina_id = @porudzbina_id)
+	BEGIN
+		INSERT INTO StavkePorudzbina(porudzbina_id, proizvod_sifra, kolicina)
+		VALUES (@porudzbina_id, @proizvod_sifra, @kolicina)
+		RETURN 0;
+	END
+		RETURN -1;
+END TRY
+BEGIN CATCH
+	RETURN @@ERROR;
+END CATCH
+GO
+
 /*** POGLEDI **********************************************************/
 
+CREATE VIEW PregledProizvoda AS
+SELECT P.ime, P.sifra, P.cena, P.kolicina, K.ime AS kategorija_ime
+FROM Proizvodi1 P
+JOIN Kategorije K ON P.kategorija_id = K.kategorija_id;
 
-
-
+select * from PregledProizvoda
 
 
 /*** PROC EXEC **********************************************************/
@@ -598,3 +674,10 @@ exec Opisi_Insert_1 '888','t','color.png','color.png','color.png','color.png'
 exec Opisi_Insert_1 'r','t','./Slike/color.png','./Slike/color.png','./Slike/color.png','./Slike/color.png'
 
 exec Proizvodi_Delete 'ad1'
+
+exec Proizvod_Prikaz '270270270'
+
+exec Proizvod_Single_Prikaz '270270270'
+
+select * from Porudzbine
+select * from StavkePorudzbina

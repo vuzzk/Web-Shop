@@ -67,10 +67,8 @@ namespace Web_Shop
                     {
                         fileProductImage.SaveAs(Server.MapPath("./Uploads/" + fileProductImage.FileName));
                         adresa = "./Uploads/" + fileProductImage.FileName;
-
                     }
-                }
-             
+                }            
             }
 
             WebShop unos_opisa = new WebShop();

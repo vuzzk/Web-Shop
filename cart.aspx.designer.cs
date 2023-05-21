@@ -11,34 +11,34 @@ namespace Web_Shop
 {
 
 
-    public partial class adminhome
+    public partial class cart
     {
 
         /// <summary>
-        /// lblProductCount control.
+        /// gvCart control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblProductCount;
+        protected global::System.Web.UI.WebControls.GridView gvCart;
 
         /// <summary>
-        /// lblUserCount control.
+        /// lblTotalPrice control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblUserCount;
+        protected global::System.Web.UI.WebControls.Label lblTotalPrice;
 
         /// <summary>
-        /// btnSeeShop control.
+        /// btnCheckout control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnSeeShop;
+        protected global::System.Web.UI.WebControls.Button btnCheckout;
     }
 }

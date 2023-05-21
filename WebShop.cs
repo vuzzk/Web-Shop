@@ -263,6 +263,39 @@ namespace Web_Shop
             return rezultat;
         }
 
+        public int Izmena_Proizvoda(string ime, string sifra, int cena, int kolicina, string proizvodjac, int kategorija_id)
+        {
+
+            conn.ConnectionString = wqbConfig;
+            int rezultat;
+            comm.Connection = conn;
+            comm.CommandType = CommandType.StoredProcedure;
+            comm.CommandText = "dbo.Proizvodi_Update";
+            // kolekcija Parameters
+            comm.Parameters.Add(new SqlParameter("@ime", SqlDbType.NVarChar, 100, ParameterDirection.Input, false, 0, 0, "", DataRowVersion.Current, ime));
+            comm.Parameters.Add(new SqlParameter("@sifra", SqlDbType.NVarChar, 12, ParameterDirection.Input, false, 0, 0, "", DataRowVersion.Current, sifra));
+            comm.Parameters.Add(new SqlParameter("@cena", SqlDbType.Int, 4, ParameterDirection.Input, false, 0, 0, "", DataRowVersion.Current, cena));
+            comm.Parameters.Add(new SqlParameter("@kolicina", SqlDbType.Int, 4, ParameterDirection.Input, false, 0, 0, "", DataRowVersion.Current, kolicina));
+            comm.Parameters.Add(new SqlParameter("@proizvodjac", SqlDbType.NVarChar, 100, ParameterDirection.Input, false, 0, 0, "", DataRowVersion.Current, proizvodjac));
+            comm.Parameters.Add(new SqlParameter("@kategorija_id", SqlDbType.Int, 4, ParameterDirection.Input, false, 0, 0, "", DataRowVersion.Current, kategorija_id));
+
+            comm.Parameters.Add(new SqlParameter("@RETURN_VALUE", SqlDbType.Int, 4, ParameterDirection.ReturnValue, true, 0, 0, "", DataRowVersion.Current, null));
+            conn.Open();
+            comm.ExecuteNonQuery();
+            conn.Close();
+            int Ret;
+            Ret = (int)comm.Parameters["@RETURN_VALUE"].Value;
+            if (Ret == 0)
+            {
+                rezultat = 0;
+            }
+            else
+            {
+                rezultat = 1;
+            }
+            return rezultat;
+        }
+
         public int Unos_Opisa(string tekst, string sifra_proizvoda, string slika1, string slika2, string slika3, string slika4)
         {
 
@@ -274,6 +307,39 @@ namespace Web_Shop
             // kolekcija Parameters
             comm.Parameters.Add(new SqlParameter("@tekst", SqlDbType.NVarChar, 500, ParameterDirection.Input, false, 0, 0, "", DataRowVersion.Current, tekst));
             comm.Parameters.Add(new SqlParameter("@sifra_proizvoda", SqlDbType.NVarChar, 12, ParameterDirection.Input, false, 0, 0, "", DataRowVersion.Current, sifra_proizvoda));
+            comm.Parameters.Add(new SqlParameter("@slika1", SqlDbType.NVarChar, 150, ParameterDirection.Input, false, 0, 0, "", DataRowVersion.Current, slika1));
+            comm.Parameters.Add(new SqlParameter("@slika2", SqlDbType.NVarChar, 150, ParameterDirection.Input, false, 0, 0, "", DataRowVersion.Current, slika2));
+            comm.Parameters.Add(new SqlParameter("@slika3", SqlDbType.NVarChar, 150, ParameterDirection.Input, false, 0, 0, "", DataRowVersion.Current, slika3));
+            comm.Parameters.Add(new SqlParameter("@slika4", SqlDbType.NVarChar, 150, ParameterDirection.Input, false, 0, 0, "", DataRowVersion.Current, slika4));
+
+            comm.Parameters.Add(new SqlParameter("@RETURN_VALUE", SqlDbType.Int, 4, ParameterDirection.ReturnValue, true, 0, 0, "", DataRowVersion.Current, null));
+            conn.Open();
+            comm.ExecuteNonQuery();
+            conn.Close();
+            int Ret;
+            Ret = (int)comm.Parameters["@RETURN_VALUE"].Value;
+            if (Ret == 0)
+            {
+                rezultat = 0;
+            }
+            else
+            {
+                rezultat = 1;
+            }
+            return rezultat;
+        }
+
+        public int Izmena_Opisa(string tekst, string sifra_proizvoda, string slika1, string slika2, string slika3, string slika4)
+        {
+
+            conn.ConnectionString = wqbConfig;
+            int rezultat;
+            comm.Connection = conn;
+            comm.CommandType = CommandType.StoredProcedure;
+            comm.CommandText = "dbo.Opisi_Update";
+            // kolekcija Parameters
+            comm.Parameters.Add(new SqlParameter("@tekst", SqlDbType.NVarChar, 500, ParameterDirection.Input, false, 0, 0, "", DataRowVersion.Current, tekst));
+            comm.Parameters.Add(new SqlParameter("@sifra", SqlDbType.NVarChar, 12, ParameterDirection.Input, false, 0, 0, "", DataRowVersion.Current, sifra_proizvoda));
             comm.Parameters.Add(new SqlParameter("@slika1", SqlDbType.NVarChar, 150, ParameterDirection.Input, false, 0, 0, "", DataRowVersion.Current, slika1));
             comm.Parameters.Add(new SqlParameter("@slika2", SqlDbType.NVarChar, 150, ParameterDirection.Input, false, 0, 0, "", DataRowVersion.Current, slika2));
             comm.Parameters.Add(new SqlParameter("@slika3", SqlDbType.NVarChar, 150, ParameterDirection.Input, false, 0, 0, "", DataRowVersion.Current, slika3));
@@ -412,6 +478,199 @@ namespace Web_Shop
  
             url = comm.Parameters["@slika1"].Value.ToString();
             return url;
+        }
+
+        public int Brisanje_Proizvoda(string sifra)
+        {
+
+            conn.ConnectionString = wqbConfig;
+            int rezultat;
+
+            comm.Connection = conn;
+            comm.CommandType = CommandType.StoredProcedure;
+            comm.CommandText = "Proizvodi_Delete";
+            // kolekcija Parameters
+            comm.Parameters.Add(new SqlParameter("@sifra", SqlDbType.NVarChar, 12, ParameterDirection.Input, false, 0, 0, "", DataRowVersion.Current, sifra));
+            comm.Parameters.Add(new SqlParameter("@RETURN_VALUE", SqlDbType.Int, 4, ParameterDirection.ReturnValue, true, 0, 0, "", DataRowVersion.Current, null));
+            conn.Open();
+            comm.ExecuteNonQuery();
+            conn.Close();
+
+            int Ret;
+            Ret = (int)comm.Parameters["@RETURN_VALUE"].Value;
+            if (Ret == 0)
+            {
+                rezultat = 0;
+            }
+            else
+            {
+                rezultat = 1;
+            }
+            return rezultat;
+        }
+
+        public int Brisanje_Opisa(string sifra)
+        {
+
+            conn.ConnectionString = wqbConfig;
+            int rezultat;
+
+            comm.Connection = conn;
+            comm.CommandType = CommandType.StoredProcedure;
+            comm.CommandText = "Opisi_Delete";
+            // kolekcija Parameters
+            comm.Parameters.Add(new SqlParameter("@sifra", SqlDbType.NVarChar, 12, ParameterDirection.Input, false, 0, 0, "", DataRowVersion.Current, sifra));
+            comm.Parameters.Add(new SqlParameter("@RETURN_VALUE", SqlDbType.Int, 4, ParameterDirection.ReturnValue, true, 0, 0, "", DataRowVersion.Current, null));
+            conn.Open();
+            comm.ExecuteNonQuery();
+            conn.Close();
+
+            int Ret;
+            Ret = (int)comm.Parameters["@RETURN_VALUE"].Value;
+            if (Ret == 0)
+            {
+                rezultat = 0;
+            }
+            else
+            {
+                rezultat = 1;
+            }
+            return rezultat;
+        }
+
+        public DataSet Proizvod(string sku)
+        {
+            conn.ConnectionString = wqbConfig;
+
+            comm.Connection = conn;
+            comm.CommandType = CommandType.StoredProcedure;
+            comm.CommandText = "Proizvod_Prikaz";
+            comm.Parameters.Add(new SqlParameter("@sifra", SqlDbType.NVarChar, 12, ParameterDirection.Input, false, 0, 0, "", DataRowVersion.Current, sku));
+            conn.Open();
+            comm.ExecuteNonQuery();
+            conn.Close();
+            da.SelectCommand = comm;
+            da.Fill(ds);
+
+            if (conn.State == ConnectionState.Open)
+            {
+                conn.Close();
+            }
+
+            return (ds);
+        }
+
+        public DataSet Proizvod_Single(string sku)
+        {
+            conn.ConnectionString = wqbConfig;
+
+            comm.Connection = conn;
+            comm.CommandType = CommandType.StoredProcedure;
+            comm.CommandText = "Proizvod_Single_Prikaz";
+            comm.Parameters.Add(new SqlParameter("@sifra", SqlDbType.NVarChar, 12, ParameterDirection.Input, false, 0, 0, "", DataRowVersion.Current, sku));
+            conn.Open();
+            comm.ExecuteNonQuery();
+            conn.Close();
+            da.SelectCommand = comm;
+            da.Fill(ds);
+
+            if (conn.State == ConnectionState.Open)
+            {
+                conn.Close();
+            }
+
+            return (ds);
+        }
+
+        public int Brisanje_Kategorije(string ime)
+        {
+
+            conn.ConnectionString = wqbConfig;
+            int rezultat;
+
+            comm.Connection = conn;
+            comm.CommandType = CommandType.StoredProcedure;
+            comm.CommandText = "Kategorije_Delete";
+            // kolekcija Parameters
+            comm.Parameters.Add(new SqlParameter("@ime", SqlDbType.NVarChar, 100, ParameterDirection.Input, false, 0, 0, "", DataRowVersion.Current, ime));
+            comm.Parameters.Add(new SqlParameter("@RETURN_VALUE", SqlDbType.Int, 4, ParameterDirection.ReturnValue, true, 0, 0, "", DataRowVersion.Current, null));
+            conn.Open();
+            comm.ExecuteNonQuery();
+            conn.Close();
+
+            int Ret;
+            Ret = (int)comm.Parameters["@RETURN_VALUE"].Value;
+            if (Ret == 0)
+            {
+                rezultat = 0;
+            }
+            else
+            {
+                rezultat = 1;
+            }
+            return rezultat;
+        }
+
+        public int Kreiraj_Porudzbinu(string mail, int totalSum, string success, string desc)
+        {
+            int broj_racuna = 0;
+
+            using (SqlConnection conn = new SqlConnection(wqbConfig))
+            {
+                using (SqlCommand comm = new SqlCommand("Kreiraj_Porudzbinu", conn))
+                {
+                    comm.CommandType = CommandType.StoredProcedure;
+
+                    comm.Parameters.Add(new SqlParameter("@korisnik_email", SqlDbType.NVarChar, 50, ParameterDirection.Input, false, 0, 0, "", DataRowVersion.Current, mail));
+                    comm.Parameters.Add(new SqlParameter("@ukupan_iznos", SqlDbType.Int, 5, ParameterDirection.Input, false, 0, 0, "", DataRowVersion.Current, totalSum));
+                    comm.Parameters.Add(new SqlParameter("@porudzbina_uspesna", SqlDbType.NVarChar, 2, ParameterDirection.Input, false, 0, 0, "", DataRowVersion.Current, success));
+                    comm.Parameters.Add(new SqlParameter("@napomena", SqlDbType.NVarChar, int.MaxValue, ParameterDirection.Input, false, 0, 0, "", DataRowVersion.Current, desc));
+                    SqlParameter ordernumberParameter = new SqlParameter("@porudzbina_id", SqlDbType.Int);
+                    ordernumberParameter.Direction = ParameterDirection.Output;
+                    comm.Parameters.Add(ordernumberParameter);
+
+                    conn.Open();
+                    comm.ExecuteNonQuery();
+
+                    // Retrieve the output parameter value
+                    broj_racuna = (int)ordernumberParameter.Value;
+
+                    conn.Close();
+                }
+            }
+
+            return broj_racuna;
+        }
+
+        public int Stavka_Porudzbine(int order_number, string product_sku, int quantity)
+        {
+            int rezultat;
+            using (SqlConnection conn = new SqlConnection(wqbConfig))
+            using (SqlCommand comm = new SqlCommand("Stavka_Porudzbine_Insert", conn))
+            {
+                comm.CommandType = CommandType.StoredProcedure;
+                comm.Parameters.Add(new SqlParameter("@porudzbina_id", SqlDbType.Int)).Value = order_number;
+                comm.Parameters.Add(new SqlParameter("@proizvod_sifra", SqlDbType.NVarChar, 12)).Value = product_sku;
+                comm.Parameters.Add(new SqlParameter("@kolicina", SqlDbType.Int)).Value = quantity;
+
+                SqlParameter returnValueParam = new SqlParameter("@RETURN_VALUE", SqlDbType.Int);
+                returnValueParam.Direction = ParameterDirection.ReturnValue;
+                comm.Parameters.Add(returnValueParam);
+
+                conn.Open();
+                comm.ExecuteNonQuery();
+
+                int Ret = (int)comm.Parameters["@RETURN_VALUE"].Value;
+                if (Ret == 0)
+                {
+                    rezultat = 0;
+                }
+                else
+                {
+                    rezultat = 1;
+                }
+            }
+            return rezultat;
         }
     }
  

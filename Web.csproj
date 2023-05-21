@@ -73,7 +73,9 @@
     <Content Include="addproduct.aspx" />
     <Content Include="adduser.aspx" />
     <Content Include="adminhome.aspx" />
+    <Content Include="cart.aspx" />
     <Content Include="categories.aspx" />
+    <Content Include="checkout.aspx" />
     <Content Include="contact.aspx" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
@@ -93,6 +95,8 @@
     <Content Include="Content\bootstrap.rtl.min.css" />
     <Content Include="CSS\admin.css" />
     <Content Include="CSS\master.css" />
+    <Content Include="editcategory.aspx" />
+    <Content Include="editproduct.aspx" />
     <Content Include="edituser.aspx" />
     <Content Include="home.aspx" />
     <Content Include="products.aspx" />
@@ -191,6 +195,8 @@
     <Content Include="Scripts\umd\popper.js" />
     <Content Include="Scripts\umd\popper.min.js" />
     <Content Include="SignUp.aspx" />
+    <Content Include="singleproduct.aspx" />
+    <Content Include="thankyou.aspx" />
     <Content Include="users.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -237,6 +243,13 @@
     <Compile Include="adminhome.aspx.designer.cs">
       <DependentUpon>adminhome.aspx</DependentUpon>
     </Compile>
+    <Compile Include="cart.aspx.cs">
+      <DependentUpon>cart.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="cart.aspx.designer.cs">
+      <DependentUpon>cart.aspx</DependentUpon>
+    </Compile>
     <Compile Include="categories.aspx.cs">
       <DependentUpon>categories.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -244,12 +257,33 @@
     <Compile Include="categories.aspx.designer.cs">
       <DependentUpon>categories.aspx</DependentUpon>
     </Compile>
+    <Compile Include="checkout.aspx.cs">
+      <DependentUpon>checkout.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="checkout.aspx.designer.cs">
+      <DependentUpon>checkout.aspx</DependentUpon>
+    </Compile>
     <Compile Include="contact.aspx.cs">
       <DependentUpon>contact.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="contact.aspx.designer.cs">
       <DependentUpon>contact.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="editcategory.aspx.cs">
+      <DependentUpon>editcategory.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="editcategory.aspx.designer.cs">
+      <DependentUpon>editcategory.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="editproduct.aspx.cs">
+      <DependentUpon>editproduct.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="editproduct.aspx.designer.cs">
+      <DependentUpon>editproduct.aspx</DependentUpon>
     </Compile>
     <Compile Include="edituser.aspx.cs">
       <DependentUpon>edituser.aspx</DependentUpon>
@@ -294,12 +328,26 @@
     <Compile Include="SignUp.aspx.designer.cs">
       <DependentUpon>SignUp.aspx</DependentUpon>
     </Compile>
+    <Compile Include="singleproduct.aspx.cs">
+      <DependentUpon>singleproduct.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="singleproduct.aspx.designer.cs">
+      <DependentUpon>singleproduct.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Site.Master.cs">
       <DependentUpon>Site.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Site.Master.designer.cs">
       <DependentUpon>Site.Master</DependentUpon>
+    </Compile>
+    <Compile Include="thankyou.aspx.cs">
+      <DependentUpon>thankyou.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="thankyou.aspx.designer.cs">
+      <DependentUpon>thankyou.aspx</DependentUpon>
     </Compile>
     <Compile Include="users.aspx.cs">
       <DependentUpon>users.aspx</DependentUpon>

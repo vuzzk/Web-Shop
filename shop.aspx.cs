@@ -48,9 +48,28 @@ namespace Web_Shop
             // TODO: Implement category filtering
         }
 
-        protected void btnAddToCart_Click(object sender, EventArgs e)
+        protected void btnSeeProduct_Click(object sender, EventArgs e)
         {
-            // TODO: Implement adding a product to the cart
+            // Get the button that raised the event
+            Button btnSeeProduct = (Button)sender;
+
+            // Get the RepeaterItem associated with the button
+            RepeaterItem item = (RepeaterItem)btnSeeProduct.NamingContainer;
+
+            // Get the sifra from the CommandArgument of the button
+            string sifra = (string)btnSeeProduct.CommandArgument;
+
+            Response.Redirect("singleproduct.aspx?sifra=" + sifra);
+        }
+
+
+        protected void rptProducts_ItemCommand(object source, RepeaterCommandEventArgs e)
+        {
+            if (e.CommandName == "ViewProduct")
+            {
+                string sifra = e.CommandArgument.ToString();
+                Response.Redirect("singleproduct.aspx?sifra=" + sifra);
+            }
         }
     }
 }

@@ -23,7 +23,7 @@
                         <%# Eval("sifra") %>
                     </ItemTemplate>
                 </asp:TemplateField>
-                <asp:TemplateField HeaderText="Cena">
+                <asp:TemplateField HeaderText="Cena (€)">
                     <ItemTemplate>
                         <%# Eval("cena") %>
                     </ItemTemplate>

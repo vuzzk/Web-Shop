@@ -37,7 +37,7 @@ namespace Web_Shop
 
         protected void btnCart_Click(object sender, EventArgs e)
         {
-
+            Response.Redirect("cart.aspx");
         }
 
         protected void btnMyAccount_Click(object sender, EventArgs e)

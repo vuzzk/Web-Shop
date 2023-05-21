@@ -32,16 +32,18 @@
             </div>
             <div class="col-md-9 mt-4">
                 <div class="row">
-                    <asp:Repeater ID="rptProducts" runat="server" DataSourceID="SqlDataSourceProducts">
+                    <asp:Repeater ID="rptProducts" runat="server" DataSourceID="SqlDataSourceProducts" OnItemCommand="rptProducts_ItemCommand">
                         <ItemTemplate>
                             <div class="col-md-4 mb-4">
                                 <div class="card">
                                     <img src='<%# GetProductImage(Eval("sifra")) %>' class="card-img-top" alt="<%# GetProductImage(Eval("sifra")) %>">
-                                    <div class="card-body">
+                                    <div class="card-body text-center">
                                         <h5 class="card-title"><%# Eval("ime") %></h5>
                                         <p class="card-text">Šifra: <%# Eval("sifra") %></p>
                                         <p class="card-text">Cena: $<%# Eval("cena") %></p>
-                                        <asp:Button ID="btnAddToCart" runat="server" Text="DODAJ U KORPU" CssClass="btn btn-primary" OnClick="btnAddToCart_Click" />
+
+                                        <asp:Button ID="btnSeeProduct" runat="server" Text="VIDI PROIZVOD" CssClass="btn btn-primary" OnClick="btnSeeProduct_Click"
+                                            CommandArgument='<%# Eval("sifra") %>' CommandName="ViewProduct" />
                                     </div>
                                 </div>
                             </div>

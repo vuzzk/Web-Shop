@@ -19,7 +19,6 @@ namespace Web_Shop
         {
             Button btnEdit = (Button)sender;
             string email = btnEdit.CommandArgument;
-            string lozinka;
             Session["EditMail"] = email;
             Response.Redirect("edituser.aspx");
             

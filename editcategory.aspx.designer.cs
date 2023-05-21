@@ -11,34 +11,52 @@ namespace Web_Shop
 {
 
 
-    public partial class adminhome
+    public partial class editcategory
     {
 
         /// <summary>
-        /// lblProductCount control.
+        /// btnBack control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblProductCount;
+        protected global::System.Web.UI.WebControls.Button btnBack;
 
         /// <summary>
-        /// lblUserCount control.
+        /// lblError control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblUserCount;
+        protected global::System.Web.UI.WebControls.Label lblError;
 
         /// <summary>
-        /// btnSeeShop control.
+        /// txtName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnSeeShop;
+        protected global::System.Web.UI.WebControls.TextBox txtName;
+
+        /// <summary>
+        /// txtDescription control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtDescription;
+
+        /// <summary>
+        /// btnSaveChanges control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnSaveChanges;
     }
 }

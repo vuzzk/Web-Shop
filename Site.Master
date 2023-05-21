@@ -55,10 +55,10 @@
                 <div class="row">
                     <div class="col">
                         <ul class="list-unstyled d-flex justify-content-center">
-                            <li><a href="home.aspx" class="mx-2 text-light">Home</a></li>
-                            <li><a href="shop.aspx" class="mx-2 text-light">Shop</a></li>
-                            <li><a href="about.aspx" class="mx-2 text-light">About Us</a></li>
-                            <li><a href="contact.aspx" class="mx-2 text-light">Contact</a></li>
+                            <li><a href="home.aspx" class="mx-2 text-light">Početna</a></li>
+                            <li><a href="shop.aspx" class="mx-2 text-light">Prodavnica</a></li>
+                            <li><a href="about.aspx" class="mx-2 text-light">O nama</a></li>
+                            <li><a href="contact.aspx" class="mx-2 text-light">Kontakt</a></li>
                         </ul>
                     </div>
                 </div>

@@ -38,7 +38,7 @@
                                 <a class="nav-link active" href="adduser.aspx">Dodajte korisnika</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link active" href="#">Vidite kategorije</a>
+                                <a class="nav-link active" href="categories.aspx">Vidite kategorije</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link active" href="addcategory.aspx">Dodajte kategoriju</a>
@@ -50,7 +50,7 @@
                                 <a class="nav-link active" href="addproduct.aspx">Dodajte proizvod</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link active" href="#">Vidite porudžbine</a>
+                                <a class="nav-link active" href="orders.aspx">Vidite porudžbine</a>
                             </li>
                         </ul>
                     </div>
