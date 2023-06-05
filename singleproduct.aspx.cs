@@ -64,36 +64,36 @@ namespace Web_Shop
             {
                 if (Session["Cart"] == null)
                 {
-                    // Create a new DataTable to store cart items
+                    // Kreiraj novi DataTable za stavke korpe
                     DataTable cartItems = new DataTable();
                     cartItems.Columns.Add("Name");
                     cartItems.Columns.Add("SKU");
                     cartItems.Columns.Add("Price", typeof(decimal));
                     cartItems.Columns.Add("Quantity", typeof(int));
 
-                    // Add the DataTable to the session
+                    // Zapamti Datable 
                     Session["Cart"] = cartItems;
                 }
 
-                // Get the selected product details
+                // Uzmi detalje proizvoda
                 string name = lblProductName.InnerText;
                 string sku = lblSKU.InnerText;
                 decimal price = Convert.ToDecimal(lblPrice.InnerText);
                 int quantity = GetQuantity();
 
-                // Retrieve the cart DataTable from the session
+                // Uzmi podatke o korpi iz sesije
                 DataTable cartItemsTable = (DataTable)Session["Cart"];
 
-                // Check if the product is already in the cart
+                // Proveri da li je proizvod već u korpi
                 DataRow[] existingRows = cartItemsTable.Select("SKU = '" + sku + "'");
                 if (existingRows.Length > 0)
                 {
-                    // Update the quantity of the existing product
+                    // Ažuriraj količinu proizvoda
                     existingRows[0]["Quantity"] = Convert.ToInt32(existingRows[0]["Quantity"]) + quantity;
                 }
                 else
                 {
-                    // Add the new product to the cart
+                    // Dodaj novi proizvod u korpu
                     DataRow newRow = cartItemsTable.NewRow();
                     newRow["Name"] = name;
                     newRow["SKU"] = sku;
@@ -102,7 +102,7 @@ namespace Web_Shop
                     cartItemsTable.Rows.Add(newRow);
                 }
 
-                // Update the session with the modified cart DataTable
+                // Zapamti ažuriranu korpu
                 Session["Cart"] = cartItemsTable;
 
                 Response.Redirect("cart.aspx");
@@ -112,7 +112,6 @@ namespace Web_Shop
                 lblError.Visible = true;
                 lblError.Text = "Nemamo toliku količinu proizvoda u zalihama";
             }
-
         }
 
         protected void btnPlus_Click(object sender, EventArgs e)

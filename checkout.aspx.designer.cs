@@ -78,15 +78,6 @@ namespace Web_Shop
         protected global::System.Web.UI.WebControls.TextBox txtAddress;
 
         /// <summary>
-        /// txtDesc control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtDesc;
-
-        /// <summary>
         /// lblTotalAmount control.
         /// </summary>
         /// <remarks>
@@ -94,6 +85,15 @@ namespace Web_Shop
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblTotalAmount;
+
+        /// <summary>
+        /// txtDesc control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtDesc;
 
         /// <summary>
         /// labelError control.

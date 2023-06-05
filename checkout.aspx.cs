@@ -80,13 +80,12 @@ namespace Web_Shop
                 }
                 else
                 {
-                    // Handle the case where one or more items failed to be inserted
-                }
+
+                 }
             }
             else
             {
-                // Porudžbina failed to be created
-                // Handle the error or display a message to the user
+                 
             }
         }
 

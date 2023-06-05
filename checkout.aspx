@@ -43,10 +43,7 @@
                     <label for="txtAddress">Adresa</label>
                     <asp:TextBox ID="txtAddress" runat="server" CssClass="form-control" Rows="3" ></asp:TextBox>
                 </div>
-                <div class="form-group">
-                    <label for="txtDesc">Napomena</label>
-                    <asp:TextBox ID="txtDesc" runat="server" CssClass="form-control" Rows="3"  TextMode="MultiLine"></asp:TextBox>
-                </div>
+                
             </div>
             <div class="col-md-6">
                 <h4>Pregled porudžbine</h4>
@@ -54,6 +51,10 @@
                 <div class="form-group">
                     <label for="lblTotalAmount">Iznos za plaćanje</label>
                     <asp:Label ID="lblTotalAmount" runat="server" CssClass="form-control" Text=""></asp:Label>
+                </div>
+                <div class="form-group">
+                    <label for="txtDesc">Napomena</label>
+                    <asp:TextBox ID="txtDesc" runat="server" CssClass="form-control" Rows="3"  TextMode="MultiLine"></asp:TextBox>
                 </div>
                 <div class="form-group">
                     <asp:Label ID="labelError" runat="server" CssClass="form-control text-bg-danger" Text="" Visible="false"></asp:Label>
